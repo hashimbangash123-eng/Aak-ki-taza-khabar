@@ -1,0 +1,89 @@
+name: Aaj Ki Taza Khabar - Autonomous News Pipeline
+
+on:
+  schedule:
+    # Run every 2 hours
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  collect-verify-publish:
+    name: Ingest, Fact-Check & Publish News
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Kill Switch (PAUSE_PUBLISHING)
+        if: ${{ vars.PAUSE_PUBLISHING == 'true' }}
+        run: |
+          echo "PAUSE_PUBLISHING repository variable is set to true. Aborting pipeline immediately."
+          exit 0
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run News Ingestion & Gemini Fact-Check Pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PAUSE_PUBLISHING: ${{ vars.PAUSE_PUBLISHING }}
+        run: npm run pipeline
+
+      - name: Verify Build Integrity
+        run: npm run build
+
+      - name: Commit & Push Auto-Published Articles to Main
+        run: |
+          git config user.name "Aaj Ki Taza Khabar Bot"
+          git config user.email "bot@aajkitazakhabar.pages.dev"
+          
+          # Stage auto-published news and logs
+          git add src/content/news/ logs/
+          
+          if git diff --staged --quiet; then
+            echo "No new auto-published articles in this cycle."
+          else
+            git commit -m "feat(news): auto-publish verified articles [skip ci]"
+            git push origin main
+          fi
+
+      - name: Handle Sensitive News via Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if there are pending sensitive articles requiring human review
+          if [ -d "src/content/pending" ] && [ "$(ls -A src/content/pending/en 2>/dev/null)" ]; then
+            echo "Pending sensitive articles detected. Creating review branch and Pull Request..."
+            BRANCH_NAME="review/news-$(date +%s)"
+            git checkout -b "$BRANCH_NAME"
+            git add src/content/pending/
+            git commit -m "chore(review): sensitive articles submitted for editorial approval"
+            git push origin "$BRANCH_NAME"
+            
+            gh pr create \
+              --title "[Editorial Approval Required] Sensitive Articles Review - $(date -u +'%Y-%m-%d %H:%M UTC')" \
+              --body "### Editorial Gatekeeper Notice
+The autonomous news pipeline has detected articles covering sensitive categories (Politics, Crime, Health, or allegations).
+As per our editorial policy, these cannot be auto-published and require human editor approval.
+
+**Action Required**:
+1. Review the proposed English and Urdu markdown files in \`src/content/pending/\`.
+2. Verify all claims against original source URLs.
+3. If approved, move the files to \`src/content/news/en/\` and \`src/content/news/ur/\` and merge this PR." \
+              --base main \
+              --head "$BRANCH_NAME"
+          else
+            echo "No pending review articles found."
+          fi

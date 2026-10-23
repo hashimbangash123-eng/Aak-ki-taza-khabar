@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'صفحۂ اول', url: 'https://aajkitazakhabar.pages.dev/ur/' },
+  { name: 'ہمارے متعلق', url: 'https://aajkitazakhabar.pages.dev/ur/about' }
+];
+---
+
+<BaseLayout
+  title="ہمارے متعلق | آج کی تازہ خبر"
+  description="آج کی تازہ خبر کا مشن، کثیر الجہتی تصدیقی طریقہ کار اور آزاد صحافتی اقدار۔"
+  lang="ur"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/ur/about"
+  alternateUrl="https://aajkitazakhabar.pages.dev/en/about"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="max-w-3xl mx-auto py-6 space-y-8">
+    <header class="border-b border-neutral-800 pb-4">
+      <span class="text-xs font-bold text-red-500 uppercase tracking-wider">ادارتی تعارف</span>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mt-1">آج کی تازہ خبر کے بارے میں</h1>
+      <p class="text-neutral-400 text-sm mt-2">
+        پاکستان اور دنیا بھر کے قارئین کے لیے آزاد، مصدقہ اور کثیر الجہتی صحافت۔
+      </p>
+    </header>
+
+    <div class="prose prose-invert prose-red max-w-none text-neutral-300 leading-relaxed space-y-6 text-sm sm:text-base">
+      <p>
+        <strong>آج کی تازہ خبر</strong> ایک آزاد اور جدید ڈیجیٹل نیوز پلیٹ فارم ہے جس کا بنیادی مقصد انٹرنیٹ پر پھیلنے والی بے بنیاد افواہوں، سنسنی خیزی اور کلک بیٹ کے خلاف قارئین تک مصدقہ حقائق پہنچانا ہے۔ ہم بیک وقت اردو اور انگریزی دونوں زبانوں میں معیاری ادارتی خدمات فراہم کرتے ہیں۔
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">ہمارے بنیادی ادارتی اصول</h2>
+      <ul class="space-y-2 list-disc pe-5">
+        <li>
+          <strong>من گھڑت مواد کی ممانعت:</strong> ہم کبھی بھی اپنی طرف سے کوئی خبر، فرضی نام، من گھڑت اعداد و شمار، یا جھوٹے بیانات شامل نہیں کرتے۔ اگر کسی واقعے کا کوئی پہلو ابھی غیر مصدقہ ہو تو قارئین کو واضح طور پر مطلع کیا جاتا ہے۔
+        </li>
+        <li>
+          <strong>کثیر الجہتی تصدیق:</strong> ہم محض ایک ذریعے کی بنیاد پر خبر شائع نہیں کرتے۔ کسی بھی خبر کی اشاعت کے لیے کم از کم دو آزاد اور معتبر اخباری ذرائع یا ایک بنیادی سرکاری اتھارٹی (جیسے اسٹیٹ بینک، سپریم کورٹ، پی سی بی وغیرہ) کی تصدیق لازمی ہے۔
+        </li>
+        <li>
+          <strong>تعداد پر معیار کو ترجیح:</strong> ہم روزانہ سینکڑوں غیر مصدقہ خبروں کا انبار لگانے کے بجائے 10 سے 20 جامع اور انتہائی مفید خبریں شائع کرنے پر یقین رکھتے ہیں۔
+        </li>
+        <li>
+          <strong>سلیس اور معیاری اردو:</strong> ہماری اردو خبریں مشینی لفظی ترجمہ نہیں ہوتیں بلکہ روزمرہ صحافتی اردو، درست گرامر اور خوش خط نستعلیق رسم الخط میں پیش کی جاتی ہیں۔
+        </li>
+      </ul>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">غیر جانبداری</h2>
+      <p>
+        ہمارا ادارہ کسی بھی سیاسی جماعت، تجارتی گروہ یا مفاداتی لابی سے وابستہ نہیں ہے۔ تمام خبریں صرف اور صرف شواہد اور شفافیت کے اصولوں کے تحت پرکھی جاتی ہیں۔
+      </p>
+    </div>
+  </div>
+</BaseLayout>

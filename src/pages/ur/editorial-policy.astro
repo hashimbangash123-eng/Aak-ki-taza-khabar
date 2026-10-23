@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'صفحۂ اول', url: 'https://aajkitazakhabar.pages.dev/ur/' },
+  { name: 'ادارتی پالیسی', url: 'https://aajkitazakhabar.pages.dev/ur/editorial-policy' }
+];
+---
+
+<BaseLayout
+  title="ادارتی پالیسی اور اے آئی کے رہنما اصول | آج کی تازہ خبر"
+  description="خبروں کے حصول، کم از کم دو ذرائع کی تصدیق، مصنوعی ذہانت کے ذمہ دارانہ استعمال اور فیکٹ چیکنگ کی مکمل تفصیلات۔"
+  lang="ur"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/ur/editorial-policy"
+  alternateUrl="https://aajkitazakhabar.pages.dev/en/editorial-policy"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="max-w-3xl mx-auto py-6 space-y-8">
+    <header class="border-b border-neutral-800 pb-4">
+      <span class="text-xs font-bold text-red-500 uppercase tracking-wider">صحافتی اقدار</span>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mt-1">ادارتی پالیسی و تصدیقی طریقہ کار</h1>
+      <p class="text-neutral-400 text-sm mt-2">
+        خبروں کے ذرائع، دو ذرائع کی تصدیقی شرط اور مصنوعی ذہانت کے ذمہ دارانہ استعمال کے ضوابط۔
+      </p>
+    </header>
+
+    <div class="prose prose-invert prose-red max-w-none text-neutral-300 leading-relaxed space-y-6 text-sm sm:text-base">
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">1. ذرائع کے انتخاب کا معیار</h2>
+      <p>
+        آج کی تازہ خبر میں صرف عوامی طور پر رجسٹرڈ اور معتبر سرکاری و نجی خبر رساں اداروں کے شائع شدہ بیانات سے مواد لیا جاتا ہے۔ ہمارے ذرائع دو بنیادی اقسام پر مشتمل ہیں:
+      </p>
+      <ul class="space-y-1 list-disc pe-5">
+        <li><strong>بنیادی سرکاری ادارے:</strong> حکومت کے سرکاری گزٹس، اسٹیٹ بینک آف پاکستان، عدالت عظمیٰ کے پریس ریلیز اور پاکستان کرکٹ بورڈ یا فیفا کے سرکاری اعلانات۔</li>
+        <li><strong>معتبر اخباری ادارے:</strong> ایسوسی ایٹڈ پریس آف پاکستان (اے پی پی)، ریڈیو پاکستان، رائٹرز، ڈان، ایکسپریس ٹریبیون اور دیگر مستند ایجنسیاں۔</li>
+      </ul>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">2. کم از کم دو ذرائع سے تصدیق کا لازمی اصول</h2>
+      <p>
+        ہماری پالیسی کے تحت کوئی بھی واقعہ اس وقت تک شائع نہیں ہو سکتا جب تک:
+      </p>
+      <ol class="space-y-1 list-decimal pe-5">
+        <li>کم از کم دو مختلف اور آزاد خبر رساں اداروں نے اس کی الگ الگ رپورٹنگ نہ کی ہو۔</li>
+        <li>یا وہ خبر براہ راست کسی مجاز بنیادی سرکاری یا عدالتی ادارے کی طرف سے جاری نہ ہوئی ہو۔</li>
+      </ol>
+      <p>
+        اگر کسی واقعے کو صرف ایک غیر سرکاری ذریعے نے رپورٹ کیا ہو تو اسے فوراً مسترد کر کے وجوہات کے ساتھ ہمارے پبلک لاگ (logs/skipped.json) میں درج کیا جاتا ہے۔
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">3. مصنوعی ذہانت (Gemini) کا شفاف استعمال</h2>
+      <p>
+        ہم جدید ٹیکنالوجی کا استعمال خالصتاً ادارتی معاونت اور فیکٹ چیکنگ کے لیے کرتے ہیں:
+      </p>
+      <ul class="space-y-2 list-disc pe-5">
+        <li><strong>من گھڑت باتوں کی قطعی ممانعت:</strong> ماڈل کو سختی سے پابند کیا گیا ہے کہ وہ اپنی طرف سے کوئی بات شامل نہ کرے۔ ہر نام، تاریخ اور عدد کا ذرائع میں موجود ہونا لازمی ہے۔</li>
+        <li><strong>اپنے الفاظ میں تخلیقی تحریر:</strong> کاپی پیسٹ کرنے کے بجائے اصل حقائق کو سلیس اور معیاری صحافتی زبان میں دوبارہ لکھا جاتا ہے۔</li>
+        <li><strong>ڈبل چیکنگ اور خودکار آڈٹ:</strong> ہر تحریر بننے کے بعد دوبارہ فیکٹ چیکر ماڈل کے پاس جاتی ہے جو اصل ذرائع سے ایک ایک جملے کی تصدیق کرتا ہے۔ ذرہ برابر بھی شک کی صورت میں رپورٹ خارج کر دی جاتی ہے۔</li>
+        <li><strong>شفاف شناخت:</strong> ہر ایسی رپورٹ کے ساتھ باقاعدہ طور پر "مصنوعی ذہانت کی معاونت، ادارتی نظرثانی" کا لیبل لگایا جاتا ہے۔</li>
+      </ul>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">4. حساس موضوعات پر انسانی ادارتی منظوری</h2>
+      <p>
+        سیاست، جرائم، صحت عامہ، عدالتوں میں زیر سماعت الزامات یا عام شہریوں کے نجی معاملات سے متعلق کوئی بھی خبر خودکار طور پر شائع نہیں کی جاتی۔ ایسی تمام خبریں الگ فولڈر میں رکھی جاتی ہیں اور انسانی مدیر کی تصدیق اور دستخط کے بعد ہی عوام کے لیے جاری ہوتی ہیں۔
+      </p>
+    </div>
+  </div>
+</BaseLayout>

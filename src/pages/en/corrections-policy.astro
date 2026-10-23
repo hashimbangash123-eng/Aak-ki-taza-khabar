@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: 'https://aajkitazakhabar.pages.dev/en/' },
+  { name: 'Corrections Policy', url: 'https://aajkitazakhabar.pages.dev/en/corrections-policy' }
+];
+---
+
+<BaseLayout
+  title="Corrections & Retractions Policy | Aaj Ki Taza Khabar"
+  description="Our commitment to transparency, immediate error resolution, public log archiving, and reader accountability."
+  lang="en"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/en/corrections-policy"
+  alternateUrl="https://aajkitazakhabar.pages.dev/ur/corrections-policy"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="max-w-3xl mx-auto py-6 space-y-8">
+    <header class="border-b border-neutral-800 pb-4">
+      <span class="text-xs font-bold text-red-500 uppercase tracking-wider">Accountability Protocol</span>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mt-1">Corrections & Accuracy Policy</h1>
+      <p class="text-neutral-400 text-sm mt-2">
+        How we acknowledge, amend, and publicly document errors with zero evasion.
+      </p>
+    </header>
+
+    <div class="prose prose-invert prose-red max-w-none text-neutral-300 leading-relaxed space-y-6 text-sm sm:text-base">
+      <p>
+        Aaj Ki Taza Khabar is committed to absolute factual integrity. When an error of fact or substantive omission occurs, we do not quietly alter text without notice. We correct the record swiftly and visibly.
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">1. The Correction Standard</h2>
+      <ul class="space-y-2 list-disc ps-5">
+        <li>
+          <strong>Substantive Corrections:</strong> Any factual change to a name, number, quote, timeline, or legal status is marked with an editorial notice at the conclusion of the article, specifying the exact date of amendment, the original statement, and the rectified fact.
+        </li>
+        <li>
+          <strong>The Public Corrections Registry:</strong> Every substantive correction is permanently archived on our public <a href="/en/corrections" class="text-red-400 underline">Corrections Log</a> page for complete reader transparency.
+        </li>
+        <li>
+          <strong>Minor Typographical Errors:</strong> Simple spelling corrections or punctuation that do not alter factual comprehension may be fixed directly without a dedicated correction notice.
+        </li>
+      </ul>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">2. Reader Reporting Channel</h2>
+      <p>
+        Every article page features a direct "Report an Error to Editors" link. Readers are encouraged to submit verifiable documentation or links pointing out potential inaccuracies. Our editorial desk investigates all reader alerts within 24 hours.
+      </p>
+      <p>
+        Direct submissions can also be forwarded to: <code>corrections@aajkitazakhabar.pages.dev</code>.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

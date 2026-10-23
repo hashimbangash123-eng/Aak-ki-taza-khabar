@@ -1,0 +1,84 @@
+---
+interface Props {
+  title: string;
+  category: string;
+  publishedAt: Date | string;
+  lang: 'en' | 'ur';
+  aspectRatio?: 'video' | 'square' | 'wide';
+}
+
+const { title, category, publishedAt, lang, aspectRatio = 'video' } = Astro.props;
+
+const dateObj = typeof publishedAt === 'string' ? new Date(publishedAt) : publishedAt;
+const formattedDate = dateObj.toLocaleDateString(lang === 'ur' ? 'ur-PK' : 'en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric'
+});
+
+const isUrdu = lang === 'ur';
+const categoryLabels: Record<string, { en: string; ur: string }> = {
+  pakistan: { en: 'Pakistan', ur: 'پاکستان' },
+  politics: { en: 'Politics', ur: 'سیاست' },
+  world: { en: 'World', ur: 'عالمی' },
+  cricket: { en: 'Cricket', ur: 'کرکٹ' },
+  football: { en: 'Football', ur: 'فٹ بال' },
+  esports: { en: 'Esports', ur: 'ای اسپورٹس' },
+  technology: { en: 'Technology', ur: 'ٹیکنالوجی' },
+  business: { en: 'Business', ur: 'معیشت' },
+  health: { en: 'Health', ur: 'صحت' },
+  education: { en: 'Education', ur: 'تعلیم' },
+  crime: { en: 'Crime', ur: 'جرائم' }
+};
+
+const categoryDisplay = categoryLabels[category.toLowerCase()]
+  ? categoryLabels[category.toLowerCase()][lang]
+  : category.toUpperCase();
+
+const aspectClass =
+  aspectRatio === 'video' ? 'aspect-16/9' : aspectRatio === 'wide' ? 'aspect-21/9' : 'aspect-square';
+---
+
+<div class={`relative w-full overflow-hidden rounded-xl border border-red-950/40 bg-linear-to-br from-neutral-900 via-neutral-950 to-black ${aspectClass} p-5 sm:p-7 flex flex-col justify-between shadow-xl shadow-red-950/10`}>
+  <!-- Background Pattern & Watermark -->
+  <div class="pointer-events-none absolute inset-0 opacity-5 bg-[radial-gradient(#ef4444_1px,transparent_1px)] [background-size:16px_16px]"></div>
+  
+  <div class="absolute -right-10 -bottom-10 opacity-10 select-none text-red-500 font-black text-7xl sm:text-9xl tracking-tighter">
+    {isUrdu ? 'آج' : 'AKT'}
+  </div>
+
+  <!-- Top Badges -->
+  <div class="relative z-10 flex items-center justify-between gap-3">
+    <div class="inline-flex items-center gap-2">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider bg-red-600 text-white shadow-xs">
+        <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+        {categoryDisplay}
+      </span>
+      <span class="text-xs text-neutral-400 font-mono tracking-tight">
+        {formattedDate}
+      </span>
+    </div>
+
+    <div class="text-[11px] font-semibold text-neutral-400 uppercase tracking-widest flex items-center gap-1.5">
+      <span class="w-2 h-2 rounded-xs bg-red-600"></span>
+      {isUrdu ? 'آج کی تازہ خبر' : 'Aaj Ki Taza Khabar'}
+    </div>
+  </div>
+
+  <!-- Main Headline Block inside Card -->
+  <div class="relative z-10 my-auto py-2">
+    <h3 class={`text-lg sm:text-2xl font-extrabold text-white leading-snug line-clamp-3 text-balance ${isUrdu ? 'text-right' : 'text-left'}`}>
+      {title}
+    </h3>
+  </div>
+
+  <!-- Bottom Notice Label -->
+  <div class="relative z-10 pt-2 border-t border-neutral-800/80 flex items-center justify-between text-[11px] text-neutral-400">
+    <span>
+      {isUrdu ? 'ادارتی سمری کارڈ • تصدیق شدہ ذرائع' : 'Editorial News Card • Verified Sources'}
+    </span>
+    <span class="text-neutral-400">
+      {isUrdu ? 'نمائندہ تصویر، جائے وقوعہ سے نہیں' : 'Representative visual, not from event'}
+    </span>
+  </div>
+</div>

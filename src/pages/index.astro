@@ -1,0 +1,17 @@
+---
+// Redirect root request to default locale (/en/)
+return Astro.redirect('/en/');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0;url=/en/" />
+    <title>Redirecting to Aaj Ki Taza Khabar...</title>
+    <link rel="canonical" href="https://aajkitazakhabar.pages.dev/en/" />
+  </head>
+  <body style="background: #0c0d12; color: #fff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh;">
+    <p>Redirecting to <a href="/en/" style="color: #ef4444; font-weight: bold;">Aaj Ki Taza Khabar (English)</a>...</p>
+  </body>
+</html>

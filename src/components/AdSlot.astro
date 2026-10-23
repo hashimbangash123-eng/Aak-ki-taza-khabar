@@ -1,0 +1,32 @@
+---
+// AdSlot Component: strictly disabled placeholder
+// As per project requirements: Do not turn ads on.
+// This component provides the markup structure for future monetization without serving ads or making external script requests.
+interface Props {
+  slotId?: string;
+  format?: 'banner' | 'in-feed' | 'rectangle';
+  className?: string;
+}
+
+const { slotId = 'default-slot', format = 'banner', className = '' } = Astro.props;
+
+// Ads are strictly disabled
+const ADS_ENABLED = false;
+---
+
+{ADS_ENABLED ? (
+  <aside aria-label="Advertisement" class={`my-6 text-center ${className}`}>
+    <div class="text-[10px] text-neutral-400 uppercase tracking-widest mb-1">Advertisement</div>
+    <ins
+      class="adsbygoogle block"
+      style="display:block"
+      data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+      data-ad-slot={slotId}
+      data-ad-format={format}
+      data-full-width-responsive="true"
+    />
+  </aside>
+) : (
+  <!-- Disabled Ad Slot Placeholder [Monetization Disabled] -->
+  <div class="hidden" aria-hidden="true" data-ad-slot-status="disabled"></div>
+)}

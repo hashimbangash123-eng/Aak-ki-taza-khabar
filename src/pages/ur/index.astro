@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsTicker from '../../components/NewsTicker.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('news', ({ data }) => {
+  return data.lang === 'ur' && data.status === 'published';
+});
+
+// Sort descending by publication date
+allArticles.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+const leadStory = allArticles[0];
+const secondaryStories = allArticles.slice(1, 4);
+const otherStories = allArticles.slice(4);
+
+const tickerItems = allArticles.slice(0, 8).map((art) => ({
+  title: art.data.title,
+  url: `/ur/${art.data.category}/${art.data.id}/`,
+  category: art.data.category
+}));
+
+const categoryLabels: Record<string, string> = {
+  business: 'معیشت و بینکاری',
+  technology: 'ٹیکنالوجی اور ڈیجیٹل پاکستان',
+  cricket: 'کرکٹ',
+  education: 'تعلیم اور اعلیٰ تحقیق',
+  football: 'فٹ بال',
+  esports: 'ای اسپورٹس'
+};
+
+const categories = ['business', 'technology', 'cricket', 'education', 'football', 'esports'];
+---
+
+<BaseLayout
+  title="تازہ ترین خبریں، پاکستان اور دنیا بھر کے مصدقہ حالات حاضرہ"
+  description="پاکستان اور دنیا بھر کی مستند و غیر جانبدار خبریں۔ کثیر الجہتی سرکاری و شائع شدہ ذرائع سے اخذ کردہ رپورٹس۔"
+  lang="ur"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/ur/"
+  alternateUrl="https://aajkitazakhabar.pages.dev/en/"
+>
+  <!-- Breaking News Ticker (Urdu) -->
+  <NewsTicker items={tickerItems} lang="ur" />
+
+  <div class="mt-6 space-y-12">
+    <!-- Top Newsroom Verification Banner in Urdu -->
+    <section class="rounded-xl border border-red-950/70 bg-gradient-to-l from-red-950/40 via-neutral-900 to-neutral-950 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+      <div class="flex items-center gap-3">
+        <span class="p-2 rounded bg-red-600/20 text-red-500 border border-red-600/30">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </span>
+        <div>
+          <h2 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+            مصدقہ صحافتی معیار اور تصدیقی ضابطہ
+          </h2>
+          <p class="text-xs text-neutral-400">
+            ہر رپورٹ کی اشاعت سے قبل کم از کم دو مستند آزاد میڈیا ذرائع یا سرکاری بنیادی اتھارٹی سے تصدیق لازمی ہے۔
+          </p>
+        </div>
+      </div>
+      <a
+        href="/ur/editorial-policy"
+        class="text-xs font-semibold text-red-400 hover:text-red-300 underline underline-offset-4 self-start sm:self-auto"
+      >
+        ہمارا تصدیقی عمل ←
+      </a>
+    </section>
+
+    <!-- Lead Story & Top Headlines Grid -->
+    {leadStory ? (
+      <section aria-labelledby="top-stories-heading-ur" class="space-y-6">
+        <div class="flex items-center justify-between border-b border-neutral-800 pb-2">
+          <h2 id="top-stories-heading-ur" class="text-base sm:text-lg font-black text-white uppercase tracking-wider flex items-center gap-2">
+            <span class="w-2.5 h-2.5 bg-red-600 rounded-xs"></span>
+            <span>شہ سرخی اور اہم ترین مصدقہ خبریں</span>
+          </h2>
+          <span class="text-xs text-neutral-400">لائیو ایڈیشن</span>
+        </div>
+
+        <!-- Hero Lead Story -->
+        <ArticleCard
+          id={leadStory.data.id}
+          lang="ur"
+          title={leadStory.data.title}
+          summary={leadStory.data.summary}
+          category={leadStory.data.category}
+          publishedAt={leadStory.data.publishedAt}
+          sources={leadStory.data.sources}
+          variant="lead"
+        />
+
+        <!-- Secondary Stories Grid -->
+        {secondaryStories.length > 0 && (
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            {secondaryStories.map((story) => (
+              <ArticleCard
+                id={story.data.id}
+                lang="ur"
+                title={story.data.title}
+                summary={story.data.summary}
+                category={story.data.category}
+                publishedAt={story.data.publishedAt}
+                sources={story.data.sources}
+                variant="standard"
+              />
+            ))}
+          </div>
+        )}
+      </section>
+    ) : (
+      <div class="p-12 text-center text-neutral-400 rounded-xl border border-neutral-800">
+        <p>مصدقہ ذرائع سے خبروں کی آمد کا انتظار ہے۔</p>
+      </div>
+    )}
+
+    <!-- Category Specific Blocks -->
+    <div class="space-y-12">
+      {categories.map((catKey) => {
+        const catArticles = allArticles.filter((art) => art.data.category === catKey);
+        if (catArticles.length === 0) return null;
+
+        return (
+          <section aria-labelledby={`cat-heading-ur-${catKey}`} class="space-y-4">
+            <div class="flex items-center justify-between border-b border-neutral-800 pb-2">
+              <h2 id={`cat-heading-ur-${catKey}`} class="text-base font-black text-white uppercase tracking-wider flex items-center gap-2">
+                <span class="w-2 h-2 bg-red-600 rounded-xs"></span>
+                <span>{categoryLabels[catKey] || catKey}</span>
+              </h2>
+              <a
+                href={`/ur/${catKey}/`}
+                class="text-xs font-semibold text-red-500 hover:text-red-400 hover:underline uppercase tracking-wider"
+              >
+                تمام رپورٹس دیکھیں ←
+              </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {catArticles.slice(0, 3).map((art) => (
+                <ArticleCard
+                  id={art.data.id}
+                  lang="ur"
+                  title={art.data.title}
+                  summary={art.data.summary}
+                  category={art.data.category}
+                  publishedAt={art.data.publishedAt}
+                  sources={art.data.sources}
+                  variant="standard"
+                />
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  </div>
+</BaseLayout>

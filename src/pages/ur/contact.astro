@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'صفحۂ اول', url: 'https://aajkitazakhabar.pages.dev/ur/' },
+  { name: 'رابطہ و غلطی کی اطلاع', url: 'https://aajkitazakhabar.pages.dev/ur/contact' }
+];
+---
+
+<BaseLayout
+  title="ادارتی ڈیسک سے رابطہ اور غلطی کی اطلاع | آج کی تازہ خبر"
+  description="ہمارے ادارتی عملے سے رابطہ کریں، پریس ریلیز بھیجیں یا کسی شائع شدہ خبر میں حقائق کی نشاندہی فرمائیں۔"
+  lang="ur"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/ur/contact"
+  alternateUrl="https://aajkitazakhabar.pages.dev/en/contact"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="max-w-3xl mx-auto py-6 space-y-8">
+    <header class="border-b border-neutral-800 pb-4">
+      <span class="text-xs font-bold text-red-500 uppercase tracking-wider">براہ راست رابطہ</span>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mt-1">ادارتی ڈیسک سے رابطہ اور حقائق کی نشاندہی</h1>
+      <p class="text-neutral-400 text-sm mt-2">
+        ہم قارئین کی آراء، پریس ریلیز اور تصحیحی شواہد کے لیے 24 گھنٹے دستیاب ہیں۔
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose">
+      <!-- Contact Card 1 -->
+      <div class="p-6 rounded-xl border border-neutral-800 bg-neutral-900/40 space-y-3">
+        <div class="w-9 h-9 rounded bg-red-600/20 text-red-500 border border-red-600/30 flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <h2 class="text-lg font-bold text-white">عمومی ادارتی رابطہ و پریس ریلیز</h2>
+        <p class="text-xs text-neutral-400">سرکاری اداروں اور خبر رساں اداروں کے بیانات کے لیے:</p>
+        <div class="pt-2">
+          <a href="mailto:contact@aajkitazakhabar.pages.dev" class="text-sm font-semibold text-red-400 hover:text-red-300 underline font-mono">
+            contact@aajkitazakhabar.pages.dev
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Card 2 -->
+      <div class="p-6 rounded-xl border border-neutral-800 bg-neutral-900/40 space-y-3">
+        <div class="w-9 h-9 rounded bg-amber-600/20 text-amber-500 border border-amber-600/30 flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <h2 class="text-lg font-bold text-white">شعبہ تحقیق، تصحیح اور فیکٹ چیک</h2>
+        <p class="text-xs text-neutral-400">کسی بھی شائع شدہ خبر میں شواہد کے ساتھ غلطی کی نشاندہی کے لیے:</p>
+        <div class="pt-2">
+          <a href="mailto:corrections@aajkitazakhabar.pages.dev" class="text-sm font-semibold text-amber-400 hover:text-amber-300 underline font-mono">
+            corrections@aajkitazakhabar.pages.dev
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Reporting Form in Urdu -->
+    <section class="p-6 sm:p-8 rounded-2xl border border-neutral-800 bg-neutral-900/50 space-y-5">
+      <div>
+        <h2 class="text-lg font-bold text-white">براہ راست آن لائن فیڈ بیک اور غلطی کی اطلاع</h2>
+        <p class="text-xs text-neutral-400 mt-1">
+          براہ کرم متعلقہ خبر کا لنک اور سرکاری ذرائع یا اصل شواہد کے روابط ساتھ درج کریں۔
+        </p>
+      </div>
+
+      <form class="space-y-4" onsubmit="event.preventDefault(); document.getElementById('msg-sent-ur').classList.remove('hidden');">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="name-ur" class="block text-xs font-semibold text-neutral-300 mb-1">آپ کا نام</label>
+            <input
+              type="text"
+              id="name-ur"
+              required
+              class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-neutral-200 text-xs focus:border-red-500 focus:outline-hidden"
+              placeholder="مثال: طارق محمود"
+            />
+          </div>
+          <div>
+            <label for="email-ur" class="block text-xs font-semibold text-neutral-300 mb-1">ای میل ایڈریس</label>
+            <input
+              type="email"
+              id="email-ur"
+              required
+              class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-neutral-200 text-xs focus:border-red-500 focus:outline-hidden"
+              placeholder="name@example.com"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="article-ur" class="block text-xs font-semibold text-neutral-300 mb-1">خبر کا عنوان یا لنک</label>
+          <input
+            type="text"
+            id="article-ur"
+            class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-neutral-200 text-xs focus:border-red-500 focus:outline-hidden"
+            placeholder="خبر کا عنوان یا URL یہاں چسپاں کریں"
+          />
+        </div>
+
+        <div>
+          <label for="details-ur" class="block text-xs font-semibold text-neutral-300 mb-1">تفصیل اور شواہد کے لنکس</label>
+          <textarea
+            id="details-ur"
+            rows="4"
+            required
+            class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-neutral-200 text-xs focus:border-red-500 focus:outline-hidden"
+            placeholder="نشاندہی کی مکمل وضاحت اور تصدیقی سرکاری ماخذ کا لنک درج کریں..."
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+        >
+          ادارتی ڈیسک کو ارسال کریں
+        </button>
+
+        <div id="msg-sent-ur" class="hidden p-3 rounded bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs">
+          ✓ آپ کا پیغام موصول ہو گیا ہے۔ ہماری فیکٹ چیکنگ ٹیم 24 گھنٹے کے اندر شواہد کا جائزہ لے کر عمل درآمد کرے گی۔
+        </div>
+      </form>
+    </section>
+  </div>
+</BaseLayout>

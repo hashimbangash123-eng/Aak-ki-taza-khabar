@@ -1,0 +1,175 @@
+---
+import EditorialCard from './EditorialCard.astro';
+
+interface Source {
+  name: string;
+  url: string;
+  type?: string;
+}
+
+interface Props {
+  id: string;
+  lang: 'en' | 'ur';
+  title: string;
+  summary: string;
+  category: string;
+  publishedAt: Date | string;
+  sources: Source[];
+  variant?: 'lead' | 'standard' | 'compact';
+}
+
+const {
+  id,
+  lang,
+  title,
+  summary,
+  category,
+  publishedAt,
+  sources,
+  variant = 'standard'
+} = Astro.props;
+
+const isUrdu = lang === 'ur';
+const dateObj = typeof publishedAt === 'string' ? new Date(publishedAt) : publishedAt;
+const formattedDate = dateObj.toLocaleDateString(isUrdu ? 'ur-PK' : 'en-US', {
+  month: 'short',
+  day: 'numeric'
+});
+
+const articleUrl = `/${lang}/${category}/${id}/`;
+
+const categoryLabels: Record<string, { en: string; ur: string }> = {
+  pakistan: { en: 'Pakistan', ur: 'پاکستان' },
+  politics: { en: 'Politics', ur: 'سیاست' },
+  world: { en: 'World', ur: 'عالمی' },
+  cricket: { en: 'Cricket', ur: 'کرکٹ' },
+  football: { en: 'Football', ur: 'فٹ بال' },
+  esports: { en: 'Esports', ur: 'ای اسپورٹس' },
+  technology: { en: 'Technology', ur: 'ٹیکنالوجی' },
+  business: { en: 'Business', ur: 'معیشت' },
+  health: { en: 'Health', ur: 'صحت' },
+  education: { en: 'Education', ur: 'تعلیم' },
+  crime: { en: 'Crime', ur: 'جرائم' }
+};
+
+const categoryLabel = categoryLabels[category.toLowerCase()]
+  ? categoryLabels[category.toLowerCase()][lang]
+  : category.toUpperCase();
+---
+
+{variant === 'lead' ? (
+  <article class="group relative overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5 sm:p-8 hover:border-red-900/80 transition-all duration-300">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+      <!-- Visual Card -->
+      <div class="lg:col-span-7">
+        <a href={articleUrl} class="block focus:outline-hidden">
+          <EditorialCard
+            title={title}
+            category={category}
+            publishedAt={publishedAt}
+            lang={lang}
+            aspectRatio="wide"
+          />
+        </a>
+      </div>
+
+      <!-- Lead Details -->
+      <div class="lg:col-span-5 flex flex-col justify-center space-y-4">
+        <div class="flex items-center gap-3">
+          <a
+            href={`/${lang}/${category}/`}
+            class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-red-600 text-white hover:bg-red-500 transition-colors"
+          >
+            {categoryLabel}
+          </a>
+          <span class="text-xs text-neutral-400 font-mono">{formattedDate}</span>
+          <span class="text-neutral-400">•</span>
+          <span class="text-xs text-emerald-400 font-medium">
+            {sources.length} {isUrdu ? 'مصدقہ ذرائع' : 'Verified Sources'}
+          </span>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-black text-white group-hover:text-red-400 transition-colors leading-tight">
+          <a href={articleUrl}>
+            {title}
+          </a>
+        </h2>
+
+        <p class="text-neutral-300 text-sm sm:text-base leading-relaxed line-clamp-3">
+          {summary}
+        </p>
+
+        <div class="pt-2 flex items-center justify-between">
+          <a
+            href={articleUrl}
+            class="inline-flex items-center gap-2 text-xs font-bold text-red-500 hover:text-red-400 uppercase tracking-wider group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform"
+          >
+            <span>{isUrdu ? 'مکمل رپورٹ پڑھیں' : 'Read Full Verified Story'}</span>
+            <svg class="w-4 h-4 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+) : variant === 'compact' ? (
+  <article class="group py-3 border-b border-neutral-800/80 last:border-b-0">
+    <div class="flex items-center gap-2 text-[11px] text-neutral-400 mb-1">
+      <span class="text-red-400 font-bold uppercase tracking-wider">{categoryLabel}</span>
+      <span>•</span>
+      <span>{formattedDate}</span>
+    </div>
+    <h3 class="text-sm font-bold text-neutral-200 group-hover:text-red-400 transition-colors line-clamp-2 leading-snug">
+      <a href={articleUrl}>
+        {title}
+      </a>
+    </h3>
+  </article>
+) : (
+  <article class="group flex flex-col justify-between overflow-hidden rounded-xl border border-neutral-800/90 bg-neutral-900/40 p-5 hover:border-red-900/60 hover:bg-neutral-900/70 transition-all duration-200">
+    <div class="space-y-3">
+      <!-- Visual Card -->
+      <a href={articleUrl} class="block focus:outline-hidden">
+        <EditorialCard
+          title={title}
+          category={category}
+          publishedAt={publishedAt}
+          lang={lang}
+          aspectRatio="video"
+        />
+      </a>
+
+      <!-- Category & Date -->
+      <div class="flex items-center gap-2 pt-1 text-xs">
+        <a
+          href={`/${lang}/${category}/`}
+          class="text-red-400 hover:text-red-300 font-bold uppercase tracking-wider text-[11px]"
+        >
+          {categoryLabel}
+        </a>
+        <span class="text-neutral-400">•</span>
+        <span class="text-neutral-400 text-[11px] font-mono">{formattedDate}</span>
+      </div>
+
+      <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-red-400 transition-colors leading-snug line-clamp-2">
+        <a href={articleUrl}>
+          {title}
+        </a>
+      </h3>
+
+      <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed line-clamp-2">
+        {summary}
+      </p>
+    </div>
+
+    <!-- Footer meta -->
+    <div class="pt-4 mt-3 border-t border-neutral-800/60 flex items-center justify-between text-[11px] text-neutral-400">
+      <span>{sources.length} {isUrdu ? 'ذرائع' : 'Sources'}</span>
+      <a href={articleUrl} class="text-red-400 hover:text-red-300 font-semibold inline-flex items-center gap-1">
+        <span>{isUrdu ? 'تفصیل' : 'Details'}</span>
+        <span class="rtl:rotate-180">→</span>
+      </a>
+    </div>
+  </article>
+)}

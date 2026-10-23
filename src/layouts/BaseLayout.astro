@@ -1,0 +1,229 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SearchModal from '../components/SearchModal.astro';
+import CloudflareAnalytics from '../components/CloudflareAnalytics.astro';
+import '../index.css';
+
+interface SchemaBreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: 'en' | 'ur';
+  canonicalUrl?: string;
+  alternateUrl?: string;
+  currentCategory?: string;
+  ogType?: 'website' | 'article';
+  publishedTime?: string | Date;
+  modifiedTime?: string | Date;
+  authors?: string[];
+  breadcrumbs?: SchemaBreadcrumbItem[];
+  imageUrl?: string;
+  imageAlt?: string;
+}
+
+const {
+  title,
+  description,
+  lang = 'en',
+  canonicalUrl,
+  alternateUrl,
+  currentCategory,
+  ogType = 'website',
+  publishedTime,
+  modifiedTime,
+  authors = ['Aaj Ki Taza Khabar Editorial Desk'],
+  breadcrumbs = [],
+  imageUrl = 'https://aajkitazakhabar.pages.dev/og-default.png',
+  imageAlt = 'Aaj Ki Taza Khabar Newsroom'
+} = Astro.props;
+
+const siteUrl = 'https://aajkitazakhabar.pages.dev';
+const isUrdu = lang === 'ur';
+const dir = isUrdu ? 'rtl' : 'ltr';
+
+const resolvedCanonical = canonicalUrl || Astro.url.href;
+const resolvedAlternate = alternateUrl || (isUrdu ? Astro.url.href.replace('/ur/', '/en/') : Astro.url.href.replace('/en/', '/ur/'));
+const englishAlternate = isUrdu ? resolvedAlternate : resolvedCanonical;
+const urduAlternate = isUrdu ? resolvedCanonical : resolvedAlternate;
+
+const siteName = isUrdu ? 'آج کی تازہ خبر' : 'Aaj Ki Taza Khabar';
+const fullTitle = `${title} | ${siteName}`;
+
+// Schema.org Structured Data
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsMediaOrganization',
+  name: 'Aaj Ki Taza Khabar',
+  alternateName: 'آج کی تازہ خبر',
+  url: siteUrl,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${siteUrl}/logo.svg`,
+    width: 512,
+    height: 512
+  },
+  publishingPrinciples: `${siteUrl}/${lang}/editorial-policy`,
+  correctionsPolicy: `${siteUrl}/${lang}/corrections-policy`,
+  masthead: `${siteUrl}/${lang}/masthead`,
+  ethicsPolicy: `${siteUrl}/${lang}/editorial-policy`,
+  sameAs: [
+    'https://twitter.com/aajkitazakhabar'
+  ]
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteName,
+  url: siteUrl,
+  inLanguage: ['en', 'ur'],
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${siteUrl}/${lang}/search?q={search_term_string}`,
+    'query-input': 'required name=search_term_string'
+  }
+};
+
+const breadcrumbSchema = breadcrumbs.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs.map((crumb, idx) => ({
+    '@type': 'ListItem',
+    position: idx + 1,
+    name: crumb.name,
+    item: crumb.url
+  }))
+} : null;
+
+const newsArticleSchema = ogType === 'article' ? {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': resolvedCanonical
+  },
+  headline: title,
+  description: description,
+  image: [imageUrl],
+  datePublished: publishedTime ? new Date(publishedTime).toISOString() : new Date().toISOString(),
+  dateModified: modifiedTime ? new Date(modifiedTime).toISOString() : (publishedTime ? new Date(publishedTime).toISOString() : new Date().toISOString()),
+  author: authors.map((authorName) => ({
+    '@type': 'Organization',
+    name: authorName,
+    url: `${siteUrl}/${lang}/masthead`
+  })),
+  publisher: {
+    '@type': 'NewsMediaOrganization',
+    name: 'Aaj Ki Taza Khabar',
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteUrl}/logo.svg`,
+      width: 512,
+      height: 512
+    }
+  },
+  inLanguage: lang,
+  isAccessibleForFree: true
+} : null;
+---
+
+<!doctype html>
+<html lang={lang} dir={dir} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+    <!-- Canonical and Hreflang Tags -->
+    <link rel="canonical" href={resolvedCanonical} />
+    <link rel="alternate" hreflang="en" href={englishAlternate} />
+    <link rel="alternate" hreflang="ur" href={urduAlternate} />
+    <link rel="alternate" hreflang="x-default" href={englishAlternate} />
+
+    <!-- Open Graph Social Cards -->
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={resolvedCanonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:locale" content={isUrdu ? 'ur_PK' : 'en_US'} />
+    <meta property="og:locale:alternate" content={isUrdu ? 'en_US' : 'ur_PK'} />
+
+    {ogType === 'article' && publishedTime && (
+      <meta property="article:published_time" content={new Date(publishedTime).toISOString()} />
+    )}
+    {ogType === 'article' && modifiedTime && (
+      <meta property="article:modified_time" content={new Date(modifiedTime).toISOString()} />
+    )}
+    {ogType === 'article' && currentCategory && (
+      <meta property="article:section" content={currentCategory} />
+    )}
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@aajkitazakhabar" />
+    <meta name="twitter:creator" content="@aajkitazakhabar" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    <!-- Mobile Theme & Web Manifest -->
+    <meta name="theme-color" content="#dc2626" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={`Aaj Ki Taza Khabar - ${lang.toUpperCase()} Feed`} href={`/${lang}/rss.xml`} />
+
+    <!-- Google Fonts Preconnect for Noto Naskh Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Pagefind UI Stylesheet placeholder (loaded at runtime) -->
+    <link rel="stylesheet" href="/pagefind/pagefind-ui.css" media="print" onload="this.media='all'" />
+
+    <!-- Schema.org JSON-LD structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {breadcrumbSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    )}
+    {newsArticleSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(newsArticleSchema)} />
+    )}
+  </head>
+
+  <body class="min-h-screen bg-[#0c0d12] text-neutral-100 flex flex-col antialiased selection:bg-red-600 selection:text-white">
+    <!-- Accessible Skip to Content Link -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-red-600 focus:text-white focus:rounded focus:shadow-lg"
+    >
+      {isUrdu ? 'مرکزی مواد پر جائیں' : 'Skip to main content'}
+    </a>
+
+    <!-- Header & Navigation -->
+    <Header lang={lang} currentCategory={currentCategory} alternateUrl={resolvedAlternate} />
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <slot />
+    </main>
+
+    <!-- Footer & Trust Links -->
+    <Footer lang={lang} />
+
+    <!-- Search Modal Component -->
+    <SearchModal lang={lang} />
+
+    <!-- Cloudflare Analytics -->
+    <CloudflareAnalytics />
+  </body>
+</html>

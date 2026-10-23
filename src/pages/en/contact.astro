@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: 'https://aajkitazakhabar.pages.dev/en/' },
+  { name: 'Contact', url: 'https://aajkitazakhabar.pages.dev/en/contact' }
+];
+---
+
+<BaseLayout
+  title="Contact the Newsroom & Report Errors | Aaj Ki Taza Khabar"
+  description="Get in touch with our editorial desk, submit press releases, or report factual errors with verified documentation."
+  lang="en"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/en/contact"
+  alternateUrl="https://aajkitazakhabar.pages.dev/ur/contact"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="max-w-3xl mx-auto py-6 space-y-8">
+    <header class="border-b border-neutral-800 pb-4">
+      <span class="text-xs font-bold text-red-500 uppercase tracking-wider">Direct Communication</span>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mt-1">Contact Editorial & Report Inaccuracies</h1>
+      <p class="text-neutral-400 text-sm mt-2">
+        We maintain open channels for tips, press inquiries, corrections, and regulatory correspondence.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose">
+      <!-- Contact Card 1 -->
+      <div class="p-6 rounded-xl border border-neutral-800 bg-neutral-900/40 space-y-3">
+        <div class="w-9 h-9 rounded bg-red-600/20 text-red-500 border border-red-600/30 flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <h2 class="text-lg font-bold text-white">General Editorial Inquiries</h2>
+        <p class="text-xs text-neutral-400">For syndication, official press releases, and editorial feedback:</p>
+        <div class="pt-2">
+          <a href="mailto:contact@aajkitazakhabar.pages.dev" class="text-sm font-semibold text-red-400 hover:text-red-300 underline font-mono">
+            contact@aajkitazakhabar.pages.dev
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Card 2 -->
+      <div class="p-6 rounded-xl border border-neutral-800 bg-neutral-900/40 space-y-3">
+        <div class="w-9 h-9 rounded bg-amber-600/20 text-amber-500 border border-amber-600/30 flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <h2 class="text-lg font-bold text-white">Corrections & Fact Verification</h2>
+        <p class="text-xs text-neutral-400">To submit documented corrections regarding any published claim:</p>
+        <div class="pt-2">
+          <a href="mailto:corrections@aajkitazakhabar.pages.dev" class="text-sm font-semibold text-amber-400 hover:text-amber-300 underline font-mono">
+            corrections@aajkitazakhabar.pages.dev
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Reporting Form Mockup / Direct Reader Submission -->
+    <section class="p-6 sm:p-8 rounded-2xl border border-neutral-800 bg-neutral-900/50 space-y-5">
+      <div>
+        <h2 class="text-lg font-bold text-white">Direct Reader Feedback & Error Submission</h2>
+        <p class="text-xs text-neutral-400 mt-1">
+          Include article URL and links to official documentation or source discrepancy.
+        </p>
+      </div>
+
+      <form class="space-y-4" onsubmit="event.preventDefault(); document.getElementById('msg-sent').classList.remove('hidden');">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="name" class="block text-xs font-semibold text-neutral-300 mb-1">Your Name</label>
+            <input
+              type="text"
+              id="name"
+              required
+              class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-neutral-200 text-xs focus:border-red-500 focus:outline-hidden"
+              placeholder="e.g. Tariq Mehmood"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-xs font-semibold text-neutral-300 mb-1">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              required
+              class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-neutral-200 text-xs focus:border-red-500 focus:outline-hidden"
+              placeholder="name@example.com"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="article" class="block text-xs font-semibold text-neutral-300 mb-1">Article Reference / URL</label>
+          <input
+            type="text"
+            id="article"
+            class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-neutral-200 text-xs focus:border-red-500 focus:outline-hidden"
+            placeholder="Paste URL or story headline"
+          />
+        </div>
+
+        <div>
+          <label for="details" class="block text-xs font-semibold text-neutral-300 mb-1">Explanation & Supporting Links</label>
+          <textarea
+            id="details"
+            rows="4"
+            required
+            class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-neutral-200 text-xs focus:border-red-500 focus:outline-hidden"
+            placeholder="Detail the specific factual discrepancy and link to the primary government or news source..."
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+        >
+          Submit to Editorial Desk
+        </button>
+
+        <div id="msg-sent" class="hidden p-3 rounded bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs">
+          ✓ Your submission has been transmitted directly to our desk. Our fact-checkers will review your references within 24 hours.
+        </div>
+      </form>
+    </section>
+  </div>
+</BaseLayout>

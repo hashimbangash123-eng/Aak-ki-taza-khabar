@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import { VALID_CATEGORIES } from '../../../constants/categories';
+
+export async function getStaticPaths() {
+  return VALID_CATEGORIES.map((category) => ({
+    params: { category },
+    props: { category }
+  }));
+}
+
+const { category } = Astro.props;
+
+const articles = await getCollection('news', ({ data }) => {
+  return data.lang === 'ur' && data.category === category && data.status === 'published';
+});
+
+articles.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+const categoryLabels: Record<string, string> = {
+  pakistan: 'پاکستان',
+  politics: 'سیاست',
+  world: 'عالمی',
+  cricket: 'کرکٹ',
+  football: 'فٹ بال',
+  esports: 'ای اسپورٹس',
+  technology: 'ٹیکنالوجی',
+  business: 'معیشت',
+  health: 'صحت',
+  education: 'تعلیم',
+  crime: 'جرائم'
+};
+
+const categoryLabel = categoryLabels[category] || category;
+
+const currentUrl = `https://aajkitazakhabar.pages.dev/ur/${category}/`;
+const alternateUrl = `https://aajkitazakhabar.pages.dev/en/${category}/`;
+
+const breadcrumbs = [
+  { name: 'صفحۂ اول', url: 'https://aajkitazakhabar.pages.dev/ur/' },
+  { name: categoryLabel, url: currentUrl }
+];
+---
+
+<BaseLayout
+  title={`${categoryLabel} کی تازہ ترین خبریں اور رپورٹس`}
+  description={`${categoryLabel} کے شعبے سے متعلق مصدقہ اور غیر جانبدارانہ خبریں۔ تصدیق شدہ ذرائع اور مستند بیانات۔`}
+  lang="ur"
+  canonicalUrl={currentUrl}
+  alternateUrl={alternateUrl}
+  currentCategory={category}
+  breadcrumbs={breadcrumbs}
+>
+  <div class="space-y-8">
+    <!-- Header -->
+    <header class="border-b border-neutral-800 pb-4">
+      <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 mb-2">
+        <a href="/ur/" class="hover:text-red-400">صفحۂ اول</a>
+        <span>/</span>
+        <span class="text-red-500">{categoryLabel}</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight flex items-center gap-3">
+        <span class="w-3 h-3 bg-red-600 rounded-xs"></span>
+        <span>{categoryLabel} کی مصدقہ خبریں</span>
+      </h1>
+      <p class="text-neutral-400 text-sm mt-1">
+        بنیادی اور مستند اخباری و حکومتی اداروں سے جانچ پڑتال کے بعد شائع کردہ رپورٹس۔
+      </p>
+    </header>
+
+    <!-- Articles Grid -->
+    {articles.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {articles.map((art) => (
+          <ArticleCard
+            id={art.data.id}
+            lang="ur"
+            title={art.data.title}
+            summary={art.data.summary}
+            category={art.data.category}
+            publishedAt={art.data.publishedAt}
+            sources={art.data.sources}
+            variant="standard"
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="p-12 text-center text-neutral-400 rounded-xl border border-neutral-800 bg-neutral-900/20">
+        <p class="text-base font-semibold text-neutral-300">اس زمرے میں فی الوقت کوئی خبر موجود نہیں۔</p>
+        <p class="text-xs mt-1">
+          جیسے ہی کثیر الجہتی ذرائع سے خبر کی تصدیق ہوگی، رپورٹ خود بخود یہاں شائع ہو جائے گی۔
+        </p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

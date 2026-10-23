@@ -1,0 +1,141 @@
+---
+interface Props {
+  lang: 'en' | 'ur';
+}
+
+const { lang } = Astro.props;
+const isUrdu = lang === 'ur';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="w-full bg-[#07070a] border-t border-neutral-800 text-neutral-300 mt-16 pt-12 pb-16 text-xs">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-neutral-800">
+      <!-- Col 1: About Platform -->
+      <div class="md:col-span-1 space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="w-7 h-7 bg-red-600 rounded-xs flex items-center justify-center text-white font-black text-sm">
+            {isUrdu ? 'آ' : 'A'}
+          </span>
+          <span class="font-serif font-black text-lg text-white">
+            {isUrdu ? 'آج کی تازہ خبر' : 'Aaj Ki Taza Khabar'}
+          </span>
+        </div>
+        <p class="text-neutral-400 text-xs leading-relaxed">
+          {isUrdu
+            ? 'پاکستان اور دنیا بھر کے اہم ترین واقعات کی مصدقہ، غیر جانبدار اور کثیر الجہتی خبر رسانی۔ ہم صرف تصدیق شدہ شائع شدہ ذرائع سے رپورٹ تیار کرتے ہیں۔'
+            : 'Independent bilingual newsroom covering Pakistan and international affairs with strict multi-source verification standards and transparent sourcing.'}
+        </p>
+        <div class="pt-2 text-neutral-400 text-[11px]">
+          <span>{isUrdu ? 'ای میل: contact@aajkitazakhabar.pages.dev' : 'Contact: contact@aajkitazakhabar.pages.dev'}</span>
+        </div>
+      </div>
+
+      <!-- Col 2: Editorial Integrity & Trust -->
+      <div class="space-y-3">
+        <h4 class="font-bold text-white text-xs uppercase tracking-wider border-b border-neutral-800 pb-2">
+          {isUrdu ? 'ادارتی شفافیت و پالیسیاں' : 'Editorial Trust & Policies'}
+        </h4>
+        <ul class="space-y-2">
+          <li>
+            <a href={`/${lang}/about`} class="hover:text-red-400 transition-colors">
+              {isUrdu ? 'ہمارے متعلق (About Us)' : 'About Us'}
+            </a>
+          </li>
+          <li>
+            <a href={`/${lang}/editorial-policy`} class="hover:text-red-400 transition-colors">
+              {isUrdu ? 'ادارتی پالیسی اور اے آئی اصول' : 'Editorial & AI Ethics Policy'}
+            </a>
+          </li>
+          <li>
+            <a href={`/${lang}/corrections-policy`} class="hover:text-red-400 transition-colors">
+              {isUrdu ? 'پالیسی برائے تصحیح و درستگی' : 'Corrections Policy'}
+            </a>
+          </li>
+          <li>
+            <a href={`/${lang}/corrections`} class="hover:text-red-400 transition-colors flex items-center gap-1.5">
+              <span>{isUrdu ? 'عوامی لاگ تصحیحات' : 'Public Corrections Log'}</span>
+              <span class="px-1.5 py-0.2 bg-red-950 text-red-400 border border-red-800/50 rounded text-[10px]">
+                {isUrdu ? 'شفاف' : 'Public'}
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href={`/${lang}/masthead`} class="hover:text-red-400 transition-colors">
+              {isUrdu ? 'ملکیت و ادارتی عملہ (Masthead)' : 'Ownership & Masthead'}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Categories & Syndication Feeds -->
+      <div class="space-y-3">
+        <h4 class="font-bold text-white text-xs uppercase tracking-wider border-b border-neutral-800 pb-2">
+          {isUrdu ? 'شعبہ جات اور آر ایس ایس فیڈز' : 'Coverage & RSS Feeds'}
+        </h4>
+        <div class="grid grid-cols-2 gap-x-2 gap-y-1.5 text-[11px]">
+          <a href={`/${lang}/pakistan/`} class="hover:text-red-400">{isUrdu ? 'پاکستان' : 'Pakistan'}</a>
+          <a href={`/${lang}/business/`} class="hover:text-red-400">{isUrdu ? 'معیشت' : 'Business'}</a>
+          <a href={`/${lang}/technology/`} class="hover:text-red-400">{isUrdu ? 'ٹیکنالوجی' : 'Technology'}</a>
+          <a href={`/${lang}/cricket/`} class="hover:text-red-400">{isUrdu ? 'کرکٹ' : 'Cricket'}</a>
+          <a href={`/${lang}/football/`} class="hover:text-red-400">{isUrdu ? 'فٹ بال' : 'Football'}</a>
+          <a href={`/${lang}/education/`} class="hover:text-red-400">{isUrdu ? 'تعلیم' : 'Education'}</a>
+        </div>
+        <div class="pt-3 border-t border-neutral-800/60 flex flex-col gap-1.5">
+          <a href={`/${lang}/rss.xml`} class="inline-flex items-center gap-1 text-red-400 hover:text-red-300 font-medium">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+              <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-8.18v4.812c10.57.062 19.137 8.623 19.199 19.188h4.797c-.061-13.226-10.761-23.93-23.996-24z"/>
+            </svg>
+            <span>{isUrdu ? 'مرکزی آر ایس ایس فیڈ (RSS)' : 'Main RSS Feed'}</span>
+          </a>
+          <a href="/news-sitemap.xml" class="text-neutral-400 hover:text-neutral-300 text-[11px]">
+            Google News Sitemap (48h)
+          </a>
+        </div>
+      </div>
+
+      <!-- Col 4: Legal & Standards -->
+      <div class="space-y-3">
+        <h4 class="font-bold text-white text-xs uppercase tracking-wider border-b border-neutral-800 pb-2">
+          {isUrdu ? 'قانونی و ادارتی تقاضے' : 'Legal & Standards'}
+        </h4>
+        <ul class="space-y-2">
+          <li>
+            <a href={`/${lang}/contact`} class="hover:text-red-400 transition-colors">
+              {isUrdu ? 'رابطہ و شکایات' : 'Contact & Reader Feedback'}
+            </a>
+          </li>
+          <li>
+            <a href={`/${lang}/privacy`} class="hover:text-red-400 transition-colors">
+              {isUrdu ? 'رازداری کی پالیسی (Privacy)' : 'Privacy Policy'}
+            </a>
+          </li>
+          <li>
+            <a href={`/${lang}/terms`} class="hover:text-red-400 transition-colors">
+              {isUrdu ? 'استعمال کی شرائط (Terms)' : 'Terms of Service'}
+            </a>
+          </li>
+          <li>
+            <a href={`/${lang}/disclaimer`} class="hover:text-red-400 transition-colors">
+              {isUrdu ? 'قانونی دستبرداری (Disclaimer)' : 'Legal Disclaimer'}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright & Compliance Notes -->
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-neutral-400 text-[11px]">
+      <div>
+        © {currentYear} Aaj Ki Taza Khabar (آج کی تازہ خبر). All rights reserved.
+      </div>
+      <div class="text-center sm:text-end">
+        {isUrdu 
+          ? 'آزاد صحافتی اخلاقیات کے مطابق شائع کردہ۔ تمام حقوق محفوظ ہیں۔'
+          : 'Published under independent newsroom accuracy and attribution guidelines.'}
+      </div>
+    </div>
+  </div>
+</footer>

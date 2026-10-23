@@ -1,0 +1,3 @@
+# Aaj Ki Taza Khabar ads.txt placeholder
+# Advertising is currently disabled. Configure with your authorized seller ID when ready:
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0

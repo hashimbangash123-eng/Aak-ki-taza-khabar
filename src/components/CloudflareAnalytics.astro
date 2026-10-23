@@ -1,0 +1,17 @@
+---
+// Cloudflare Web Analytics (Privacy-first, cookie-free)
+// To enable, set your Cloudflare Web Analytics Token in the CF_BEACON_TOKEN prop
+interface Props {
+  token?: string;
+}
+
+const { token = process.env.CF_BEACON_TOKEN } = Astro.props;
+---
+
+{token && (
+  <script
+    defer
+    src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon={JSON.stringify({ token })}
+  />
+)}

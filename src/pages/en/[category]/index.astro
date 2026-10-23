@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import { VALID_CATEGORIES } from '../../../constants/categories';
+
+export async function getStaticPaths() {
+  return VALID_CATEGORIES.map((category) => ({
+    params: { category },
+    props: { category }
+  }));
+}
+
+const { category } = Astro.props;
+
+const articles = await getCollection('news', ({ data }) => {
+  return data.lang === 'en' && data.category === category && data.status === 'published';
+});
+
+articles.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+const currentUrl = `https://aajkitazakhabar.pages.dev/en/${category}/`;
+const alternateUrl = `https://aajkitazakhabar.pages.dev/ur/${category}/`;
+
+const breadcrumbs = [
+  { name: 'Home', url: 'https://aajkitazakhabar.pages.dev/en/' },
+  { name: category.toUpperCase(), url: currentUrl }
+];
+---
+
+<BaseLayout
+  title={`${category.toUpperCase()} News & Bulletins`}
+  description={`Comprehensive verified reporting on ${category} from Pakistan and world newsrooms. Real sources, factual verification, and updates.`}
+  lang="en"
+  canonicalUrl={currentUrl}
+  alternateUrl={alternateUrl}
+  currentCategory={category}
+  breadcrumbs={breadcrumbs}
+>
+  <div class="space-y-8">
+    <!-- Header -->
+    <header class="border-b border-neutral-800 pb-4">
+      <div class="flex items-center gap-2 text-xs font-mono text-neutral-400 mb-2">
+        <a href="/en/" class="hover:text-red-400">Home</a>
+        <span>/</span>
+        <span class="text-red-500 uppercase">{category}</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight flex items-center gap-3">
+        <span class="w-3 h-3 bg-red-600 rounded-xs"></span>
+        <span>{category} News</span>
+      </h1>
+      <p class="text-neutral-400 text-sm mt-1">
+        Verified reporting cross-referenced across primary and established press agencies.
+      </p>
+    </header>
+
+    <!-- Articles Grid -->
+    {articles.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {articles.map((art) => (
+          <ArticleCard
+            id={art.data.id}
+            lang="en"
+            title={art.data.title}
+            summary={art.data.summary}
+            category={art.data.category}
+            publishedAt={art.data.publishedAt}
+            sources={art.data.sources}
+            variant="standard"
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="p-12 text-center text-neutral-400 rounded-xl border border-neutral-800 bg-neutral-900/20">
+        <p class="text-base font-semibold text-neutral-300">No stories currently in this category.</p>
+        <p class="text-xs mt-1">
+          Stories will appear here as soon as verified by two independent sources or an official authority.
+        </p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

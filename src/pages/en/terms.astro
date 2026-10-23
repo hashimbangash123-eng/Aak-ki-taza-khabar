@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: 'https://aajkitazakhabar.pages.dev/en/' },
+  { name: 'Terms of Service', url: 'https://aajkitazakhabar.pages.dev/en/terms' }
+];
+---
+
+<BaseLayout
+  title="Terms of Service | Aaj Ki Taza Khabar"
+  description="Terms governing the intellectual property, attribution standards, and ethical use of our reporting."
+  lang="en"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/en/terms"
+  alternateUrl="https://aajkitazakhabar.pages.dev/ur/terms"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="max-w-3xl mx-auto py-6 space-y-8">
+    <header class="border-b border-neutral-800 pb-4">
+      <span class="text-xs font-bold text-red-500 uppercase tracking-wider">Legal Framework</span>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mt-1">Terms of Service</h1>
+      <p class="text-neutral-400 text-sm mt-2">
+        Guidelines for reading, quoting, and referencing Aaj Ki Taza Khabar publications.
+      </p>
+    </header>
+
+    <div class="prose prose-invert prose-red max-w-none text-neutral-300 leading-relaxed space-y-6 text-sm sm:text-base">
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">1. Permitted Use & Attribution</h2>
+      <p>
+        All original synthesis, editorial analysis, and bilingual layout on Aaj Ki Taza Khabar are protected under intellectual property laws. Readers, researchers, and fellow newsrooms may quote excerpts up to 50 words provided clear, canonical hyperlink attribution is given to the original article on Aaj Ki Taza Khabar.
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">2. Prohibited Exploitation</h2>
+      <p>
+        Systematic bulk scraping, wholesale mirroring, automated content redistribution, or deceptive reproduction under false mastheads without explicit written consent is strictly prohibited.
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">3. Third-Party Source Attribution</h2>
+      <p>
+        External source links provided within our articles point to independent third-party publishers and government portals. Aaj Ki Taza Khabar claims no ownership over third-party materials and provides direct links purely for factual corroboration.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

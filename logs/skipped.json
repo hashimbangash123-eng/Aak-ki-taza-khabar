@@ -1,0 +1,9 @@
+[
+  {
+    "timestamp": "2026-10-23T04:00:00.000Z",
+    "eventTitle": "Local neighborhood road maintenance advisory in Sector F-7",
+    "sourcesCount": 1,
+    "sources": ["Local Municipal Board Notice"],
+    "reason": "Single source secondary report. Rule requires at least 2 distinct independent sources or an official primary national authority."
+  }
+]

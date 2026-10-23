@@ -1,0 +1,121 @@
+---
+interface Props {
+  lang: 'en' | 'ur';
+}
+
+const { lang } = Astro.props;
+const isUrdu = lang === 'ur';
+---
+
+<!-- Search Modal Backdrop & Dialog -->
+<div
+  id="search-dialog"
+  class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-xs flex items-start justify-center p-4 sm:pt-20"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="search-modal-title"
+>
+  <div class="relative w-full max-w-2xl bg-neutral-900 border border-neutral-700/80 rounded-2xl shadow-2xl p-6 overflow-hidden">
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between pb-4 border-b border-neutral-800">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <h2 id="search-modal-title" class="text-base font-bold text-white">
+          {isUrdu ? 'خبر تلاش کریں (Pagefind)' : 'Search News Database'}
+        </h2>
+      </div>
+
+      <button
+        type="button"
+        id="close-search-modal"
+        class="p-1 rounded-md text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors"
+        aria-label="Close search"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Pagefind Container -->
+    <div class="mt-4 max-h-[60vh] overflow-y-auto">
+      <div id="pagefind-search-container" class="w-full"></div>
+    </div>
+
+    <!-- Modal Footer Hint -->
+    <div class="mt-4 pt-3 border-t border-neutral-800 text-[11px] text-neutral-400 flex items-center justify-between">
+      <span>{isUrdu ? 'انگریزی اور اردو دونوں زبانوں میں تلاش کریں' : 'Type to search in English or Urdu'}</span>
+      <span>Press <kbd class="px-1.5 py-0.5 bg-neutral-800 rounded border border-neutral-700 text-neutral-300">Esc</kbd> to exit</span>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  let isPagefindLoaded = false;
+
+  async function initPagefind() {
+    if (isPagefindLoaded) return;
+    try {
+      // Use dynamic runtime import with vite-ignore to prevent compile-time resolution
+      const pagefindModule = await import(/* @vite-ignore */ '/pagefind/pagefind-ui.js');
+      if (pagefindModule && pagefindModule.PagefindUI) {
+        new pagefindModule.PagefindUI({
+          element: '#pagefind-search-container',
+          showSubResults: true,
+          resetStyles: false
+        });
+        isPagefindLoaded = true;
+      }
+    } catch (e) {
+      const container = document.getElementById('pagefind-search-container');
+      if (container) {
+        container.innerHTML = `
+          <div class="p-6 text-center text-xs text-neutral-400">
+            <p class="font-medium text-neutral-200 mb-1">Search index generated during build.</p>
+            <p>Pagefind index is populated upon production build (<code>npm run build</code> generates <code>dist/pagefind</code>).</p>
+          </div>
+        `;
+      }
+    }
+  }
+
+  const openBtn = document.getElementById('open-search-modal');
+  const closeBtn = document.getElementById('close-search-modal');
+  const dialog = document.getElementById('search-dialog');
+
+  function openSearch() {
+    if (!dialog) return;
+    dialog.classList.remove('hidden');
+    initPagefind();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSearch() {
+    if (!dialog) return;
+    dialog.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  openBtn?.addEventListener('click', openSearch);
+  closeBtn?.addEventListener('click', closeSearch);
+
+  dialog?.addEventListener('click', (e) => {
+    if (e.target === dialog) closeSearch();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (dialog?.classList.contains('hidden')) {
+        openSearch();
+      } else {
+        closeSearch();
+      }
+    }
+    if (e.key === 'Escape' && dialog && !dialog.classList.contains('hidden')) {
+      closeSearch();
+    }
+  });
+</script>

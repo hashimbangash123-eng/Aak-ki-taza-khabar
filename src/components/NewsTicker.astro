@@ -1,0 +1,63 @@
+---
+interface TickerItem {
+  title: string;
+  url: string;
+  category: string;
+}
+
+interface Props {
+  items: TickerItem[];
+  lang: 'en' | 'ur';
+}
+
+const { items, lang } = Astro.props;
+const isUrdu = lang === 'ur';
+---
+
+<div class="w-full bg-neutral-950 border-b border-red-950/60 overflow-hidden text-xs">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-10">
+    <!-- Live Flash Badge -->
+    <div class="shrink-0 flex items-center gap-2 bg-red-600 text-white font-bold px-3 py-1 text-[11px] uppercase tracking-wider rounded-xs shadow-xs z-10">
+      <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+      <span>{isUrdu ? 'تازہ ترین' : 'BREAKING'}</span>
+    </div>
+
+    <!-- Scrolling Headlines -->
+    <div class="relative flex-1 overflow-hidden ps-4">
+      {items.length > 0 ? (
+        <div class="flex items-center gap-8 whitespace-nowrap animate-marquee hover:[animation-play-state:paused]">
+          {items.map((item) => (
+            <a
+              href={item.url}
+              class="inline-flex items-center gap-2 text-neutral-300 hover:text-red-400 transition-colors text-xs font-medium"
+            >
+              <span class="text-red-500 font-bold uppercase text-[10px] bg-red-950/60 px-1.5 py-0.5 rounded border border-red-900/40">
+                {item.category}
+              </span>
+              <span>{item.title}</span>
+              <span class="text-neutral-400">•</span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <span class="text-neutral-400 italic">
+          {isUrdu ? 'نئے مصدقہ بلیٹنز موصول ہو رہے ہیں...' : 'Awaiting incoming verified news bulletins...'}
+        </span>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    display: inline-flex;
+    animation: marquee 35s linear infinite;
+  }
+  [dir="rtl"] .animate-marquee {
+    animation-direction: reverse;
+  }
+</style>

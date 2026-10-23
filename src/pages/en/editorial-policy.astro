@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: 'https://aajkitazakhabar.pages.dev/en/' },
+  { name: 'Editorial Policy', url: 'https://aajkitazakhabar.pages.dev/en/editorial-policy' }
+];
+---
+
+<BaseLayout
+  title="Editorial & AI Verification Policy | Aaj Ki Taza Khabar"
+  description="Detailed guidelines on how Aaj Ki Taza Khabar sources news, enforces two-source verification, utilizes Gemini AI responsibly, and audits claims."
+  lang="en"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/en/editorial-policy"
+  alternateUrl="https://aajkitazakhabar.pages.dev/ur/editorial-policy"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="max-w-3xl mx-auto py-6 space-y-8">
+    <header class="border-b border-neutral-800 pb-4">
+      <span class="text-xs font-bold text-red-500 uppercase tracking-wider">Newsroom Standards</span>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mt-1">Editorial & AI Ethics Policy</h1>
+      <p class="text-neutral-400 text-sm mt-2">
+        Transparent guidelines governing our source ingestion, multi-source threshold, algorithmic assistance, and fact-checking safeguards.
+      </p>
+    </header>
+
+    <div class="prose prose-invert prose-red max-w-none text-neutral-300 leading-relaxed space-y-6 text-sm sm:text-base">
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">1. Sourcing and Ingestion Standards</h2>
+      <p>
+        Aaj Ki Taza Khabar monitors real published news feeds and official press releases listed publicly in our verified <code>sources.json</code> registry. We classify sources into two tiers:
+      </p>
+      <ul class="space-y-1 list-disc ps-5">
+        <li><strong>Primary Authorities:</strong> Official government portals, central bank press offices (State Bank of Pakistan), supreme judicial press releases, and statutory sports governing bodies (e.g. PCB, FIFA).</li>
+        <li><strong>Secondary Press Outlets:</strong> Long-standing accredited wire services and mainstream national newspapers (e.g., Associated Press of Pakistan, Radio Pakistan, Reuters, Dawn, Tribune).</li>
+      </ul>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">2. The Two-Source Verification Threshold</h2>
+      <p>
+        An event is eligible for editorial synthesis <em>only</em> if it satisfies at least one of the following criteria:
+      </p>
+      <ol class="space-y-1 list-decimal ps-5">
+        <li>At least two completely independent, distinct news outlets have independently reported on the same incident.</li>
+        <li>The information originates directly from a primary public institution or statutory regulatory body.</li>
+      </ol>
+      <p>
+        Any item reported by only a single secondary outlet without corroboration is discarded and logged in our public <code>logs/skipped.json</code> file with the rationale for exclusion.
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">3. Responsible Use of Artificial Intelligence (Gemini)</h2>
+      <p>
+        We employ Google Gemini exclusively as an <strong>assistive drafting and fact-verification tool</strong>, strictly bound by deterministic constraints:
+      </p>
+      <ul class="space-y-2 list-disc ps-5">
+        <li><strong>Strict Context Bound:</strong> The language model is forbidden from extrapolating, inferring, or introducing external facts. Every name, figure, date, and attribution must be present in the ingested source payload.</li>
+        <li><strong>Original Synthesis:</strong> Sentences are rewritten in our own words to respect copyright and avoid plagiarism. Verbatim scraping is prohibited.</li>
+        <li><strong>Dual-Pass Automated Fact-Checking:</strong> Every drafted article is subjected to a second-pass automated verification prompt that compares each claim against the ingested source texts. If any unsupported detail is identified, the article is rejected before reaching production.</li>
+        <li><strong>Transparent Labeling:</strong> In accordance with Google News and EU AI transparency standards, all AI-synthesized stories bear an explicit "AI-assisted summary" label and the byline of our editorial desk.</li>
+      </ul>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">4. Sensitive News & Human Editorial Gatekeeping</h2>
+      <p>
+        While objective sports, technology, and business reports can be auto-published following dual verification passes, sensitive topics are <strong>never auto-published</strong>.
+      </p>
+      <p>
+        Any story concerning politics, criminal proceedings, health advisories, terrorism, legal allegations, or named private citizens is routed to a manual review queue in <code>src/content/pending/</code> via an automated GitHub Pull Request. A human editor must inspect original documents and approve publication.
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">5. Visual Asset Integrity</h2>
+      <p>
+        We strictly forbid hotlinking or scraping copyrighted press photographs. By default, articles display branded editorial text cards. In the rare case of generic stock illustration, the visual is explicitly labeled: <em>"Representative image, not from the event"</em>.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

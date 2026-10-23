@@ -1,0 +1,167 @@
+[
+  {
+    "id": "sbp-releases",
+    "name": "State Bank of Pakistan",
+    "url": "https://www.sbp.org.pk/press/index.asp",
+    "rssUrl": "https://www.sbp.org.pk/rss/press_releases.xml",
+    "type": "primary",
+    "country": "Pakistan",
+    "defaultCategory": "business",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "pcb-official",
+    "name": "Pakistan Cricket Board",
+    "url": "https://www.pcb.com.pk",
+    "rssUrl": "https://www.pcb.com.pk/rss/news.xml",
+    "type": "primary",
+    "country": "Pakistan",
+    "defaultCategory": "cricket",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "app-pakistan",
+    "name": "Associated Press of Pakistan (APP)",
+    "url": "https://www.app.com.pk",
+    "rssUrl": "https://www.app.com.pk/feed/",
+    "type": "primary",
+    "country": "Pakistan",
+    "defaultCategory": "pakistan",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "radio-pakistan",
+    "name": "Radio Pakistan Official",
+    "url": "https://www.radiopakistan.gov.pk",
+    "rssUrl": "https://www.radiopakistan.gov.pk/rss/national",
+    "type": "primary",
+    "country": "Pakistan",
+    "defaultCategory": "pakistan",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "dawn-national",
+    "name": "Dawn News",
+    "url": "https://www.dawn.com",
+    "rssUrl": "https://www.dawn.com/feeds/home",
+    "type": "secondary",
+    "country": "Pakistan",
+    "defaultCategory": "pakistan",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "tribune-pakistan",
+    "name": "The Express Tribune",
+    "url": "https://tribune.com.pk",
+    "rssUrl": "https://tribune.com.pk/feed/pakistan",
+    "type": "secondary",
+    "country": "Pakistan",
+    "defaultCategory": "pakistan",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "the-news-pk",
+    "name": "The News International",
+    "url": "https://www.thenews.com.pk",
+    "rssUrl": "https://www.thenews.com.pk/rss/1/1",
+    "type": "secondary",
+    "country": "Pakistan",
+    "defaultCategory": "pakistan",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "bbc-urdu",
+    "name": "BBC Urdu",
+    "url": "https://www.bbc.com/urdu",
+    "rssUrl": "https://feeds.bbci.co.uk/urdu/rss.xml",
+    "type": "secondary",
+    "country": "Pakistan",
+    "defaultCategory": "pakistan",
+    "language": "ur",
+    "active": true
+  },
+  {
+    "id": "geo-news",
+    "name": "Geo News",
+    "url": "https://www.geo.tv",
+    "rssUrl": "https://www.geo.tv/rss/1/1",
+    "type": "secondary",
+    "country": "Pakistan",
+    "defaultCategory": "pakistan",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "reuters-world",
+    "name": "Reuters News Agency",
+    "url": "https://www.reuters.com",
+    "rssUrl": "https://www.reutersagency.com/feed/?taxonomy=markets&post_type=best",
+    "type": "secondary",
+    "country": "Global",
+    "defaultCategory": "world",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "aljazeera-english",
+    "name": "Al Jazeera English",
+    "url": "https://www.aljazeera.com",
+    "rssUrl": "https://www.aljazeera.com/xml/rss/all.xml",
+    "type": "secondary",
+    "country": "Global",
+    "defaultCategory": "world",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "espn-cricinfo",
+    "name": "ESPNcricinfo",
+    "url": "https://www.espncricinfo.com",
+    "rssUrl": "https://www.espncricinfo.com/rss/content/story/feeds/6.xml",
+    "type": "secondary",
+    "country": "Global",
+    "defaultCategory": "cricket",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "fifa-official",
+    "name": "FIFA Official",
+    "url": "https://www.fifa.com",
+    "rssUrl": "https://www.fifa.com/rss/index.xml",
+    "type": "primary",
+    "country": "Global",
+    "defaultCategory": "football",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "the-verge",
+    "name": "The Verge",
+    "url": "https://www.theverge.com",
+    "rssUrl": "https://www.theverge.com/rss/index.xml",
+    "type": "secondary",
+    "country": "Global",
+    "defaultCategory": "technology",
+    "language": "en",
+    "active": true
+  },
+  {
+    "id": "techcrunch",
+    "name": "TechCrunch",
+    "url": "https://techcrunch.com",
+    "rssUrl": "https://techcrunch.com/feed/",
+    "type": "secondary",
+    "country": "Global",
+    "defaultCategory": "technology",
+    "language": "en",
+    "active": true
+  }
+]

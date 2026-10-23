@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'صفحۂ اول', url: 'https://aajkitazakhabar.pages.dev/ur/' },
+  { name: 'رازداری کی پالیسی', url: 'https://aajkitazakhabar.pages.dev/ur/privacy' }
+];
+---
+
+<BaseLayout
+  title="رازداری کی پالیسی (Privacy Policy) | آج کی تازہ خبر"
+  description="صارفین کے ذاتی ڈیٹا کا تحفظ، کوکیز سے پاک براؤزنگ اور رازداری کے ضوابط۔"
+  lang="ur"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/ur/privacy"
+  alternateUrl="https://aajkitazakhabar.pages.dev/en/privacy"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="max-w-3xl mx-auto py-6 space-y-8">
+    <header class="border-b border-neutral-800 pb-4">
+      <span class="text-xs font-bold text-red-500 uppercase tracking-wider">ڈیٹا کا تحفظ</span>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mt-1">رازداری کی پالیسی</h1>
+      <p class="text-neutral-400 text-sm mt-2">
+        آخری تجدید: اکتوبر 2026۔ ہم قارئین کی مکمل رازداری کا احترام کرتے ہیں۔
+      </p>
+    </header>
+
+    <div class="prose prose-invert prose-red max-w-none text-neutral-300 leading-relaxed space-y-6 text-sm sm:text-base">
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">1. ڈیٹا جمع نہ کرنے کی پالیسی</h2>
+      <p>
+        آج کی تازہ خبر پر مطالعہ کرنے کے لیے کسی رجسٹریشن، لاگ ان، کریڈٹ کارڈ یا پاس ورڈ کی ضرورت نہیں ہے۔ تمام معلومات بغیر کسی فیس یا نجی معلومات کے عوام کے لیے کھلی ہیں۔
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">2. اینالیٹکس اور کوکیز</h2>
+      <p>
+        ہم کوکیز کے ذریعے صارفین کی ذاتی سرگرمیوں کو ٹریک نہیں کرتے۔ ہمارے سرورز پر محض مجموعی وزٹس کی گنتی کی جاتی ہے تاکہ ویب سائٹ کی کارکردگی اور لوڈ ٹائم کو بہتر رکھا جا سکے۔
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">3. اشتہارات کی عدم موجودگی</h2>
+      <p>
+        ہماری ویب سائٹ پر اس وقت تجارتی اشتہارات مکمل طور پر بند ہیں۔ قارئین کا کوئی بھی ڈیٹا کسی تیسرے فریق کو فروخت نہیں کیا جاتا۔
+      </p>
+    </div>
+  </div>
+</BaseLayout>

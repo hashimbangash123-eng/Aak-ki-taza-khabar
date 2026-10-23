@@ -1,0 +1,71 @@
+---
+interface SourceItem {
+  name: string;
+  url: string;
+  type?: 'primary' | 'secondary';
+  publishedTime?: string;
+}
+
+interface Props {
+  sources: SourceItem[];
+  lang: 'en' | 'ur';
+}
+
+const { sources, lang } = Astro.props;
+const isUrdu = lang === 'ur';
+---
+
+<section aria-labelledby="sources-heading" class="my-8 rounded-xl border border-neutral-800/80 bg-neutral-900/40 p-5 sm:p-6">
+  <div class="mb-4 flex items-center justify-between border-b border-neutral-800 pb-3">
+    <div class="flex items-center gap-2">
+      <svg class="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+      </svg>
+      <h3 id="sources-heading" class="text-sm font-bold uppercase tracking-wider text-neutral-200">
+        {isUrdu ? 'بنیادی و شائع شدہ ذرائع' : 'Published Sources & Direct References'}
+      </h3>
+    </div>
+    <span class="text-xs text-neutral-400">
+      {sources.length} {isUrdu ? 'رپورٹس سے اخذ شدہ' : 'Referenced Document(s)'}
+    </span>
+  </div>
+
+  <p class="mb-4 text-xs text-neutral-400 leading-relaxed">
+    {isUrdu
+      ? 'ہماری صحافتی پالیسی کے مطابق ہر خبر کا کم از کم دو آزاد ذرائع یا ایک سرکاری بنیادی ادارے سے موازنہ کیا جاتا ہے۔ اصل دستاویزات یا خبر رساں اداروں کے بیانات درج ذیل روابط پر ملاحظہ فرمائیں:'
+      : 'As part of our commitment to transparent attribution, every story is synthesized from verified reports or primary public releases. You can read the original coverage directly at the publisher links below:'}
+  </p>
+
+  <ul class="divide-y divide-neutral-800/60">
+    {sources.map((src) => (
+      <li class="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <span class={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider ${
+            src.type === 'primary' 
+              ? 'bg-blue-950/80 text-blue-300 border border-blue-800/50' 
+              : 'bg-neutral-800 text-neutral-300'
+          }`}>
+            {src.type === 'primary' 
+              ? (isUrdu ? 'سرکاری / بنیادی ادارہ' : 'Primary Authority') 
+              : (isUrdu ? 'شائع شدہ میڈیا' : 'Secondary News Outlet')}
+          </span>
+          <span class="font-medium text-sm text-neutral-200">
+            {src.name}
+          </span>
+        </div>
+
+        <a
+          href={src.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 text-xs text-red-400 hover:text-red-300 transition-colors font-medium hover:underline self-start sm:self-auto"
+        >
+          <span>{isUrdu ? 'اصل ماخذ پر پڑھیں' : 'Read original at ' + src.name}</span>
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>

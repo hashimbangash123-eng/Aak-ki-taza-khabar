@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: 'https://aajkitazakhabar.pages.dev/en/' },
+  { name: 'Ownership & Masthead', url: 'https://aajkitazakhabar.pages.dev/en/masthead' }
+];
+---
+
+<BaseLayout
+  title="Ownership & Masthead | Aaj Ki Taza Khabar"
+  description="Transparent ownership structure, leadership, and newsroom editorial team of Aaj Ki Taza Khabar."
+  lang="en"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/en/masthead"
+  alternateUrl="https://aajkitazakhabar.pages.dev/ur/masthead"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="max-w-3xl mx-auto py-6 space-y-8">
+    <header class="border-b border-neutral-800 pb-4">
+      <span class="text-xs font-bold text-red-500 uppercase tracking-wider">Organizational Disclosure</span>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mt-1">Ownership & Masthead</h1>
+      <p class="text-neutral-400 text-sm mt-2">
+        Full disclosure of organizational ownership, funding sources, and editorial personnel.
+      </p>
+    </header>
+
+    <div class="prose prose-invert prose-red max-w-none text-neutral-300 leading-relaxed space-y-6 text-sm sm:text-base">
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">Ownership & Funding Structure</h2>
+      <p>
+        <strong>Aaj Ki Taza Khabar</strong> is an independently funded digital journalism entity operating under non-partisan governance. We receive no state subsidies, partisan donor grants, or covert political sponsorships.
+      </p>
+      <p>
+        Operational infrastructure is maintained through self-funded open-source cloud architectures, ensuring complete editorial immunity from commercial advertiser intimidation or partisan political pressure.
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">Editorial Leadership & Masthead</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 not-prose my-4">
+        <div class="p-4 rounded-xl border border-neutral-800 bg-neutral-900/40">
+          <span class="text-xs text-red-400 font-bold uppercase tracking-wider block">Managing Editor & Publisher</span>
+          <h3 class="text-base font-bold text-white mt-1">Editorial Board</h3>
+          <p class="text-xs text-neutral-400 mt-1">Oversees journalistic ethics, cross-source verification thresholds, and corrections governance.</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-neutral-800 bg-neutral-900/40">
+          <span class="text-xs text-red-400 font-bold uppercase tracking-wider block">Head of Fact-Checking & Standards</span>
+          <h3 class="text-base font-bold text-white mt-1">Fact Verification Desk</h3>
+          <p class="text-xs text-neutral-400 mt-1">Audits automated algorithmic checks against primary source records and official releases.</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-neutral-800 bg-neutral-900/40">
+          <span class="text-xs text-red-400 font-bold uppercase tracking-wider block">Urdu Language Editor</span>
+          <h3 class="text-base font-bold text-white mt-1">Urdu News Bureau</h3>
+          <p class="text-xs text-neutral-400 mt-1">Maintains idiomatic Urdu standards, correct orthography, and native newsroom terminology.</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-neutral-800 bg-neutral-900/40">
+          <span class="text-xs text-red-400 font-bold uppercase tracking-wider block">Systems & Data Infrastructure</span>
+          <h3 class="text-base font-bold text-white mt-1">Open Systems Architecture</h3>
+          <p class="text-xs text-neutral-400 mt-1">Engineers autonomous ingestion pipelines, Cloudflare CDN distribution, and Pagefind indexing.</p>
+        </div>
+      </div>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">Contact the Editorial Desk</h2>
+      <p>
+        Direct all editorial inquiries, rights queries, or masthead verification requests to: <code>desk@aajkitazakhabar.pages.dev</code>.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

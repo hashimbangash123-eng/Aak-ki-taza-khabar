@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'صفحۂ اول', url: 'https://aajkitazakhabar.pages.dev/ur/' },
+  { name: 'ملکیت و ادارتی عملہ', url: 'https://aajkitazakhabar.pages.dev/ur/masthead' }
+];
+---
+
+<BaseLayout
+  title="ملکیت و ادارتی عملہ (Masthead) | آج کی تازہ خبر"
+  description="آج کی تازہ خبر کی ملکیت کی تفصیلات، غیر جانبدار مالیاتی ڈھانچہ اور ادارتی شعبے کے ارکان۔"
+  lang="ur"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/ur/masthead"
+  alternateUrl="https://aajkitazakhabar.pages.dev/en/masthead"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="max-w-3xl mx-auto py-6 space-y-8">
+    <header class="border-b border-neutral-800 pb-4">
+      <span class="text-xs font-bold text-red-500 uppercase tracking-wider">تنظیمی شفافیت</span>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mt-1">ملکیت اور ادارتی عملہ</h1>
+      <p class="text-neutral-400 text-sm mt-2">
+        ہمارے ادارے کی غیر جانبدارانہ مالیاتی حیثیت اور ادارتی نگراں بورڈ کی تفصیلات۔
+      </p>
+    </header>
+
+    <div class="prose prose-invert prose-red max-w-none text-neutral-300 leading-relaxed space-y-6 text-sm sm:text-base">
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">مالیاتی خود مختاری</h2>
+      <p>
+        <strong>آج کی تازہ خبر</strong> ایک مکمل طور پر خود مختار ڈیجیٹل نیوز سروس ہے جو کسی بھی سیاسی جماعت، سرکاری سبسڈی یا غیر ملکی سیاسی فنڈز کے بغیر کام کرتی ہے۔ ہمارا مقصد مکمل طور پر آزاد اور قابل اعتماد صحافت کا فروغ ہے۔
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">ادارتی شعبہ جات</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 not-prose my-4">
+        <div class="p-4 rounded-xl border border-neutral-800 bg-neutral-900/40">
+          <span class="text-xs text-red-400 font-bold uppercase tracking-wider block">ادارتی بورڈ و اشاعت</span>
+          <h3 class="text-base font-bold text-white mt-1">سینئر ایڈیٹوریل بورڈ</h3>
+          <p class="text-xs text-neutral-400 mt-1">صحافتی اقدار، اخلاقی اصولوں اور کثیر الجہتی تصدیقی معیار کی نگرانی۔</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-neutral-800 bg-neutral-900/40">
+          <span class="text-xs text-red-400 font-bold uppercase tracking-wider block">فیکٹ چیکنگ ڈیسک</span>
+          <h3 class="text-base font-bold text-white mt-1">شعبہ تحقیق و تصدیق</h3>
+          <p class="text-xs text-neutral-400 mt-1">شائع شدہ اصل ذرائع اور سرکاری اعداد و شمار سے خبروں کی مطابقت کی جانچ۔</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-neutral-800 bg-neutral-900/40">
+          <span class="text-xs text-red-400 font-bold uppercase tracking-wider block">شعبہ اردو زبان و املا</span>
+          <h3 class="text-base font-bold text-white mt-1">اردو بیورو</h3>
+          <p class="text-xs text-neutral-400 mt-1">درست املا، نستعلیق رسم الخط اور شستہ و بامحاورہ صحافتی اردو کا نفاذ۔</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-neutral-800 bg-neutral-900/40">
+          <span class="text-xs text-red-400 font-bold uppercase tracking-wider block">ٹیکنیکل سسٹمز</span>
+          <h3 class="text-base font-bold text-white mt-1">ڈیجیٹل انفراسٹرکچر</h3>
+          <p class="text-xs text-neutral-400 mt-1">کلاؤڈ سسٹمز اور کلاؤڈ فلیر کے ذریعے تیز رفتار اور محفوظ ترسیل۔</p>
+        </div>
+      </div>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">رابطہ</h2>
+      <p>
+        ادارتی عملے سے رابطے کے لیے ای میل: <code>desk@aajkitazakhabar.pages.dev</code>
+      </p>
+    </div>
+  </div>
+</BaseLayout>

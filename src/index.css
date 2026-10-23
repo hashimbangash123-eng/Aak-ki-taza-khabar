@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-urdu: 'Noto Naskh Arabic', 'Urdu Typesetting', Tahoma, Arial, sans-serif;
+  }
+
+  html {
+    color-scheme: dark;
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    background-color: #0c0d12;
+    color: #f1f5f9;
+  }
+
+  html[lang="ur"] {
+    font-family: var(--font-urdu);
+    direction: rtl;
+    line-height: 1.85;
+    letter-spacing: 0;
+  }
+
+  /* Urdu Typography Refinements */
+  [lang="ur"] h1, [lang="ur"] h2, [lang="ur"] h3, [lang="ur"] h4, [lang="ur"] h5, [lang="ur"] h6 {
+    line-height: 1.6;
+    letter-spacing: normal;
+  }
+
+  /* Accessible focus ring */
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 2px solid #ef4444;
+    outline-offset: 2px;
+  }
+}
+
+/* Pagefind search results dark styling */
+.pagefind-ui {
+  --pagefind-ui-primary: #ef4444 !important;
+  --pagefind-ui-text: #f1f5f9 !important;
+  --pagefind-ui-background: #151720 !important;
+  --pagefind-ui-border: #2e3447 !important;
+  --pagefind-ui-tag: #ef4444 !important;
+}

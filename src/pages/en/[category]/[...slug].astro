@@ -1,0 +1,231 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EditorialCard from '../../../components/EditorialCard.astro';
+import VerificationBox from '../../../components/VerificationBox.astro';
+import SourceList from '../../../components/SourceList.astro';
+import ShareButtons from '../../../components/ShareButtons.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import AdSlot from '../../../components/AdSlot.astro';
+
+export async function getStaticPaths() {
+  const allEnArticles = await getCollection('news', ({ data }) => {
+    return data.lang === 'en' && data.status === 'published';
+  });
+
+  return allEnArticles.map((article) => ({
+    params: {
+      category: article.data.category,
+      slug: article.data.id
+    },
+    props: { article }
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+const currentUrl = `https://aajkitazakhabar.pages.dev/en/${article.data.category}/${article.data.id}/`;
+const alternateUrduUrl = `https://aajkitazakhabar.pages.dev/ur/${article.data.category}/${article.data.id}/`;
+
+// Fetch related articles in same category
+const related = (await getCollection('news', ({ data }) => {
+  return data.lang === 'en' && data.status === 'published' && data.id !== article.data.id;
+}))
+  .filter((a) => a.data.category === article.data.category)
+  .slice(0, 3);
+
+// Fetch corrections if any
+const corrections = article.data.corrections || [];
+
+const formattedPublishedDate = article.data.publishedAt.toLocaleDateString('en-US', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+
+const formattedPublishedTime = article.data.publishedAt.toLocaleTimeString('en-US', {
+  hour: '2-digit',
+  minute: '2-digit',
+  timeZoneName: 'short'
+});
+
+const breadcrumbs = [
+  { name: 'Home', url: 'https://aajkitazakhabar.pages.dev/en/' },
+  { name: article.data.category.toUpperCase(), url: `https://aajkitazakhabar.pages.dev/en/${article.data.category}/` },
+  { name: article.data.title, url: currentUrl }
+];
+---
+
+<BaseLayout
+  title={article.data.title}
+  description={article.data.summary}
+  lang="en"
+  canonicalUrl={currentUrl}
+  alternateUrl={alternateUrduUrl}
+  currentCategory={article.data.category}
+  ogType="article"
+  publishedTime={article.data.publishedAt}
+  modifiedTime={article.data.updatedAt || article.data.publishedAt}
+  authors={[article.data.editor]}
+  breadcrumbs={breadcrumbs}
+>
+  <article class="max-w-4xl mx-auto py-4">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs text-neutral-400 flex items-center gap-1.5 flex-wrap">
+      <a href="/en/" class="hover:text-red-400">Home</a>
+      <span>/</span>
+      <a href={`/en/${article.data.category}/`} class="hover:text-red-400 uppercase font-semibold text-red-500">
+        {article.data.category}
+      </a>
+      <span>/</span>
+      <span class="text-neutral-400 truncate max-w-xs">{article.data.title}</span>
+    </nav>
+
+    <!-- Header Block -->
+    <header class="space-y-4 pb-6 border-b border-neutral-800">
+      <div class="flex items-center gap-2 flex-wrap">
+        <a
+          href={`/en/${article.data.category}/`}
+          class="px-2.5 py-1 rounded text-xs font-bold uppercase tracking-wider bg-red-600 text-white"
+        >
+          {article.data.category}
+        </a>
+        <span class="text-xs text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2.5 py-1 rounded font-medium">
+          Multi-Source Verified ({article.data.sources.length} sources)
+        </span>
+        <a
+          href={alternateUrduUrl}
+          class="ms-auto text-xs font-semibold text-red-400 hover:text-red-300 border border-red-900/60 bg-red-950/40 px-3 py-1 rounded transition-colors"
+        >
+          اردو میں پڑھیں →
+        </a>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight text-balance">
+        {article.data.title}
+      </h1>
+
+      <!-- Executive Summary Lead -->
+      <p class="text-base sm:text-lg text-neutral-300 leading-relaxed font-serif border-l-4 border-red-600 ps-4 py-1 italic bg-neutral-900/40 rounded-r">
+        {article.data.summary}
+      </p>
+
+      <!-- Byline & Timestamps -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-neutral-400 pt-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="font-semibold text-neutral-200">
+            By {article.data.editor}
+          </span>
+          {article.data.isAIAssisted && (
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-neutral-800 text-neutral-300 border border-neutral-700">
+              <svg class="w-3 h-3 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              AI-assisted summary (Human editorial oversight)
+            </span>
+          )}
+        </div>
+
+        <div class="flex items-center gap-2 text-neutral-400 font-mono text-[11px]">
+          <time datetime={article.data.publishedAt.toISOString()}>
+            Published: {formattedPublishedDate} • {formattedPublishedTime}
+          </time>
+          {article.data.updatedAt && (
+            <span>(Updated: {article.data.updatedAt.toLocaleDateString()})</span>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <!-- Branded Editorial Visual Card (Zero scraping compliant) -->
+    <div class="my-8">
+      <EditorialCard
+        title={article.data.title}
+        category={article.data.category}
+        publishedAt={article.data.publishedAt}
+        lang="en"
+        aspectRatio="wide"
+      />
+    </div>
+
+    <!-- What We Know / What Is Not Confirmed Yet Box -->
+    <VerificationBox
+      whatWeKnow={article.data.whatWeKnow}
+      whatIsNotConfirmedYet={article.data.whatIsNotConfirmedYet}
+      lang="en"
+    />
+
+    <!-- Main Article Markdown Content -->
+    <div class="prose prose-invert prose-red max-w-none my-8 text-neutral-200 leading-relaxed text-base sm:text-lg space-y-5 font-normal">
+      <Content />
+    </div>
+
+    <!-- Corrections Section on Article if any exist -->
+    {corrections.length > 0 && (
+      <aside aria-label="Article Corrections" class="my-6 p-4 rounded-xl border border-amber-800/60 bg-amber-950/20 text-xs text-neutral-300 space-y-2">
+        <div class="flex items-center gap-2 text-amber-400 font-bold uppercase tracking-wider">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span>Editorial Correction Notice</span>
+        </div>
+        {corrections.map((corr) => (
+          <p class="leading-relaxed">
+            <span class="font-mono text-amber-300">[{corr.date}]:</span> {corr.text}
+          </p>
+        ))}
+      </aside>
+    )}
+
+    <!-- Source Attribution with Direct External Links -->
+    <SourceList sources={article.data.sources} lang="en" />
+
+    <!-- Social Share Buttons -->
+    <ShareButtons title={article.data.title} url={currentUrl} lang="en" />
+
+    <!-- Error Reporting & Editorial Feedback Link -->
+    <div class="my-6 p-4 rounded-lg bg-neutral-900/60 border border-neutral-800 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div class="text-neutral-400">
+        <span class="font-semibold text-neutral-200">Spot a factual inaccuracy?</span>
+        <span> Our newsroom operates an open corrections policy for verified facts.</span>
+      </div>
+      <a
+        href={`/en/contact?correction=${encodeURIComponent(article.data.id)}`}
+        class="inline-flex items-center gap-1.5 text-red-400 hover:text-red-300 font-semibold underline underline-offset-2 shrink-0"
+      >
+        <span>Report an Error to Editors</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- Disabled AdSlot Placeholder -->
+    <AdSlot slotId="article-bottom-slot" />
+
+    <!-- Related Articles -->
+    {related.length > 0 && (
+      <section aria-labelledby="related-heading" class="mt-12 pt-8 border-t border-neutral-800 space-y-6">
+        <h2 id="related-heading" class="text-lg font-black text-white uppercase tracking-wider flex items-center gap-2">
+          <span class="w-2 h-2 bg-red-600 rounded-xs"></span>
+          <span>Related Verified Coverage</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {related.map((rel) => (
+            <ArticleCard
+              id={rel.data.id}
+              lang="en"
+              title={rel.data.title}
+              summary={rel.data.summary}
+              category={rel.data.category}
+              publishedAt={rel.data.publishedAt}
+              sources={rel.data.sources}
+              variant="standard"
+            />
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>

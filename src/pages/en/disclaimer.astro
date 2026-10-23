@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: 'https://aajkitazakhabar.pages.dev/en/' },
+  { name: 'Disclaimer', url: 'https://aajkitazakhabar.pages.dev/en/disclaimer' }
+];
+---
+
+<BaseLayout
+  title="Legal Disclaimer & Verification Notice | Aaj Ki Taza Khabar"
+  description="Formal legal disclaimer regarding news reporting, algorithmic synthesis, third-party source claims, and financial commentary."
+  lang="en"
+  canonicalUrl="https://aajkitazakhabar.pages.dev/en/disclaimer"
+  alternateUrl="https://aajkitazakhabar.pages.dev/ur/disclaimer"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="max-w-3xl mx-auto py-6 space-y-8">
+    <header class="border-b border-neutral-800 pb-4">
+      <span class="text-xs font-bold text-red-500 uppercase tracking-wider">Legal Boundaries</span>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mt-1">Legal Disclaimer</h1>
+      <p class="text-neutral-400 text-sm mt-2">
+        Important notices regarding news updates, third-party reporting, and professional advisory boundaries.
+      </p>
+    </header>
+
+    <div class="prose prose-invert prose-red max-w-none text-neutral-300 leading-relaxed space-y-6 text-sm sm:text-base">
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">1. News Reporting Only — Not Professional Advice</h2>
+      <p>
+        The articles, summaries, and monetary rate updates published on Aaj Ki Taza Khabar are provided strictly for general journalistic informing purposes. Nothing on this website constitutes legal counsel, official financial recommendation, investment advice, or medical consultation. Readers must consult certified professionals for personal financial or medical decisions.
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">2. Sourced Information & Fluidity</h2>
+      <p>
+        News events unfold rapidly. While our dual-source verification system strives to ensure strict accuracy at the time of publication based on official and accredited records, subsequent statements by authorities may revise preliminary details. We maintain an active <a href="/en/corrections" class="text-red-400 underline">Corrections System</a> to update facts as soon as verified.
+      </p>
+
+      <h2 class="text-xl font-bold text-white border-b border-neutral-800 pb-2">3. Non-Endorsement of External Links</h2>
+      <p>
+        Hyperlinks to original publisher articles or government notices are provided solely for source verification. We do not endorse opinions, advertisements, or non-editorial content found on external destination servers.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

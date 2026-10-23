@@ -1,0 +1,6 @@
+{
+  "name": "Aaj Ki Taza Khabar",
+  "description": "Bilingual (English & Urdu) independent news platform covering Pakistan and global affairs with rigorous multi-source verification, structured NewsArticle schema, and automated pipeline.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
