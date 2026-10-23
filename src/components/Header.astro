@@ -24,7 +24,23 @@ const categories = [
 
 const targetLang = isUrdu ? 'en' : 'ur';
 const targetLangLabel = isUrdu ? 'English' : 'اردو';
-const switchHref = alternateUrl || `/${targetLang}/`;
+
+// Convert full URLs (e.g. https://aajkitazakhabar.pages.dev/ur/about) to relative paths (/ur/about)
+// so the language switch works seamlessly on localhost, preview URLs, and production.
+function toRelativePath(urlOrPath?: string): string {
+  if (!urlOrPath) return `/${targetLang}/`;
+  try {
+    if (urlOrPath.startsWith('http://') || urlOrPath.startsWith('https://')) {
+      const parsed = new URL(urlOrPath);
+      return parsed.pathname + parsed.search + parsed.hash;
+    }
+    return urlOrPath;
+  } catch {
+    return urlOrPath;
+  }
+}
+
+const switchHref = toRelativePath(alternateUrl);
 
 const todayFormatted = new Date().toLocaleDateString(isUrdu ? 'ur-PK' : 'en-US', {
   weekday: 'long',
